@@ -4,7 +4,10 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/pedro/Desktop/retro/Retro/src/retro/GamePanel.java</file>
+            <file>file:/C:/Users/pedro/Desktop/retro/Retro/src/retro/Retro.java</file>
             <file>file:/C:/Users/pedro/Desktop/retro/Retro/src/entity/Player.java</file>
+            <file>file:/C:/Users/pedro/Desktop/retro/Retro/src/tile/TileMaganer.java</file>
+            <file>file:/C:/Users/pedro/Desktop/retro/Retro/src/tile/Tile.java</file>
         </group>
     </open-files>
 </project-private>

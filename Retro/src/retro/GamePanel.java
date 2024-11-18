@@ -2,6 +2,7 @@ package retro;
 
 import entity.Player;
 import tile.TileMaganer;
+import map.Map;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -23,7 +24,8 @@ public class GamePanel extends JPanel implements Runnable{
 
     final int FPS = 60;
 
-    TileMaganer tileM = new TileMaganer(this);
+    //TileMaganer tileM = new TileMaganer(this);
+    Map map = new Map(this);
     KeyHandler keyH = new KeyHandler();
     Thread gameThread;
     Player player = new Player(this, keyH);
@@ -104,7 +106,7 @@ public class GamePanel extends JPanel implements Runnable{
 
         Graphics2D g2 = (Graphics2D) g;
 
-        tileM.draw(g2);
+        map.draw(g2);
         player.draw(g2);
 
         g2.dispose();

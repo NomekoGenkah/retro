@@ -25,6 +25,9 @@ public class Retro {
         GamePanel gamePanel = new GamePanel();
         window.add(gamePanel);
         
+        //JButton jbutton = new JButton("hola");
+        //window.add(jbutton);
+        
         window.pack();
 
         window.setLocationRelativeTo(null);

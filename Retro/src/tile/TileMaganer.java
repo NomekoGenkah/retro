@@ -1,10 +1,10 @@
 package tile;
+
 import java.awt.Graphics2D;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-
 import javax.imageio.ImageIO;
 
 import retro.GamePanel;
@@ -14,6 +14,8 @@ public class TileMaganer {
     GamePanel gp;
     Tile[] tile;
     int mapTileNum[][];
+    String prefix = "/res/screens/screen";
+    String sufix = ".txt";
 
     public TileMaganer(GamePanel gp){
 
@@ -23,7 +25,7 @@ public class TileMaganer {
         mapTileNum = new int[gp.maxScreenCol][gp.maxScreenRow];
 
         getTileImage();
-        loadMap("/res/maps/map0.txt");
+        //loadMap("/res/screens/screen0.txt");
     }
 
     public void getTileImage(){
@@ -76,7 +78,6 @@ public class TileMaganer {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
     
     public void draw(Graphics2D g2){
