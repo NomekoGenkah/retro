@@ -78,33 +78,13 @@ public class Player extends Entity{
             }
             spriteCounter = 0;
         }
+        System.out.println("valor x: " + x + "  valor y: " + y);
+
     }
 
     public void draw(Graphics2D g2){
 
-        BufferedImage image = null;
-
-    //    g2.setColor(Color.white);
-    //    g2.fillRect(x, y, gp.tileSize, gp.tileSize);
-/* 
-    switch (direction) {
-        case "up":
-            image = up1;
-            break;
-        case "down":
-            image = down1;
-            break;
-        case "left":
-            image = left1;
-            break;
-        case "right":
-            image = right1;
-            break;
-    
-        default:
-            break;
-    }
-            */
+    BufferedImage image = null;
 
     switch(direction){
         case "up":

@@ -1,5 +1,6 @@
 package map;
 
+import entity.Player;
 import java.awt.Graphics2D;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -14,16 +15,58 @@ import tile.TileMaganer;
 public class Map {
 
     GamePanel gp;
+    Player player;
     TileMaganer tileMaganer;
     int mapScreenNum[][];
+    int x, y;
 
-    public Map(GamePanel gp){
+    public Map(GamePanel gp, Player player){
         this.gp = gp;
+        this.player = player;
         tileMaganer = new TileMaganer(gp);
         mapScreenNum = new int[3][3];
+        x = 0; y = 0;
 
         loadMap("/res/maps/map0.txt");
         tileMaganer.loadMap("/res/screens/screen" + mapScreenNum[0][0] + ".txt");
+    }
+
+    public void changeMap(String direction){
+        switch (direction) {
+            case "up":
+                if(withinBorder(mapScreenNum, x, y-1)){
+                    y--;
+                }
+                break;
+            case "down":
+                if(withinBorder(mapScreenNum, x, y+1)){
+                    y++;
+                }
+                break;
+            case "left":
+                if(withinBorder(mapScreenNum, x-1, y)){
+                    x--;
+                }
+                break;
+            case "right":
+                if(withinBorder(mapScreenNum, x+1, y)){
+                    x++;
+                }
+                break;
+            default:
+                break;
+        }
+      //  if(direction != " "){
+
+        tileMaganer.loadMap("/res/screens/screen" + mapScreenNum[x][y] + ".txt");
+      //  }
+
+        //tileMaganer.loadMap("/res/screens/screen" + mapScreenNum[x][y] + ".txt");
+    }
+
+    public boolean withinBorder(int[][] matrix, int x, int y){
+
+        return x >= 0 && x < matrix.length && y >= 0 && y < matrix.length && matrix[x][y] != -1;
     }
 
     public void loadMap(String mapPath){
@@ -60,6 +103,27 @@ public class Map {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void update(int screenWidth, int screenHeight, int x, int y){
+        String direction = " ";
+        if(y == 0){
+            player.y = screenHeight - 4;
+            direction = "up";
+        }else if(y == screenHeight){
+            player.y = 4;
+            direction = "down";
+        }else if(x == 0){
+            player.x = screenWidth - 4;
+            direction = "left";
+        }else if(x == screenWidth){
+            player.x = 4;
+            direction = "right";
+        }
+        if(direction != " "){
+            changeMap(direction);
+        }
+        //changeMap(direction);
     }
 
     public void draw(Graphics2D g2){

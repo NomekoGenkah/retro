@@ -1,7 +1,7 @@
 package retro;
 
 import entity.Player;
-import tile.TileMaganer;
+//import tile.TileMaganer;
 import map.Map;
 
 import java.awt.Color;
@@ -25,10 +25,11 @@ public class GamePanel extends JPanel implements Runnable{
     final int FPS = 60;
 
     //TileMaganer tileM = new TileMaganer(this);
-    Map map = new Map(this);
     KeyHandler keyH = new KeyHandler();
     Thread gameThread;
     Player player = new Player(this, keyH);
+    Map map = new Map(this, player);
+
 
     //default player xy
     int playerX = 100;
@@ -97,6 +98,7 @@ public class GamePanel extends JPanel implements Runnable{
     public void update(){
 
         player.update();
+        map.update(screenWidth, screenHeight, player.x, player.y);
 
     }
 
