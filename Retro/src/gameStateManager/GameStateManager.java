@@ -35,5 +35,4 @@ public class GameStateManager {
     public void update(){
         changeActiveState();
     }
-
 }

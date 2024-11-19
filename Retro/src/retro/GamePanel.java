@@ -31,6 +31,7 @@ public class GamePanel extends JPanel implements Runnable{
     GameStateManager gStateManager = new GameStateManager(keyH);
     Player player = new Player(this, keyH);
     Map map = new Map(this, player);
+    UI ui = new UI(this, gStateManager);
 
 
     //default player xy
@@ -118,6 +119,7 @@ public class GamePanel extends JPanel implements Runnable{
 
         map.draw(g2);
         player.draw(g2);
+        ui.draw(g2);
 
         g2.dispose();
 
