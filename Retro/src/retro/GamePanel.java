@@ -1,10 +1,11 @@
 package retro;
 
 import entity.Player;
-//import tile.TileMaganer;
+import gameStateManager.GameStateManager;
 import map.Map;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -27,6 +28,7 @@ public class GamePanel extends JPanel implements Runnable{
     //TileMaganer tileM = new TileMaganer(this);
     KeyHandler keyH = new KeyHandler();
     Thread gameThread;
+    GameStateManager gStateManager = new GameStateManager(keyH);
     Player player = new Player(this, keyH);
     Map map = new Map(this, player);
 
@@ -43,6 +45,8 @@ public class GamePanel extends JPanel implements Runnable{
         this.setDoubleBuffered(true);
         this.addKeyListener(keyH);
         this.setFocusable(true);
+        this.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
     }
 
     public void startGameThread(){
@@ -96,10 +100,14 @@ public class GamePanel extends JPanel implements Runnable{
     }
 
     public void update(){
+        gStateManager.update();
 
-        player.update();
-        map.update(screenWidth, screenHeight, player.x, player.y);
-
+        if(gStateManager.isRunning()){
+            player.update();
+            map.update(screenWidth, screenHeight, player.x, player.y);
+        }
+    //    player.update();
+    //    map.update(screenWidth, screenHeight, player.x, player.y);
     }
 
     public void paintComponent(Graphics g){

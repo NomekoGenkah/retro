@@ -6,11 +6,21 @@ import java.awt.event.KeyListener;
 public class KeyHandler implements KeyListener{
 
     public boolean upPressed, downPressed, leftPressed, rightPressed;
+    public boolean escPressed = false;
 
     @Override
     public void keyPressed(KeyEvent e) {
         int code = e.getKeyCode();
 
+        if(code == KeyEvent.VK_ESCAPE){
+            if(!escPressed){
+                escPressed = true;
+            }else{
+                escPressed = false;
+            }
+
+            System.out.println("paused :" + escPressed);
+        }
         if(code == KeyEvent.VK_W){
             upPressed = true;
         }

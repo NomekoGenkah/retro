@@ -78,7 +78,7 @@ public class Player extends Entity{
             }
             spriteCounter = 0;
         }
-        System.out.println("valor x: " + x + "  valor y: " + y);
+        //System.out.println("valor x: " + x + "  valor y: " + y);
 
     }
 
