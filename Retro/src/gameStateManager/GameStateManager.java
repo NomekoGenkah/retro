@@ -14,7 +14,7 @@ public class GameStateManager {
     }
 
     public void changeActiveState(){
-        if(keyH.escPressed){
+        if(keyH.pPressed){
             this.activeState = states[1];
         }else{
             this.activeState = states[0];

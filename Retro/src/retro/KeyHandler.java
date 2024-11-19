@@ -6,20 +6,20 @@ import java.awt.event.KeyListener;
 public class KeyHandler implements KeyListener{
 
     public boolean upPressed, downPressed, leftPressed, rightPressed;
-    public boolean escPressed = false;
+    public boolean pPressed = false;
 
     @Override
     public void keyPressed(KeyEvent e) {
         int code = e.getKeyCode();
 
-        if(code == KeyEvent.VK_ESCAPE){
-            if(!escPressed){
-                escPressed = true;
+        if(code == KeyEvent.VK_P){
+            if(!pPressed){
+                pPressed = true;
             }else{
-                escPressed = false;
+                pPressed = false;
             }
 
-            System.out.println("paused :" + escPressed);
+            System.out.println("paused :" + pPressed);
         }
         if(code == KeyEvent.VK_W){
             upPressed = true;
