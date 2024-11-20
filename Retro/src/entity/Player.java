@@ -4,6 +4,7 @@ import retro.GamePanel;
 import retro.KeyHandler;
 
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
@@ -17,6 +18,12 @@ public class Player extends Entity{
     public Player(GamePanel gp, KeyHandler keyH){
         this.gp = gp;
         this.keyH = keyH;
+
+        solidArea = new Rectangle();
+        solidArea.x = 8;
+        solidArea.y = 16;
+        solidArea.width = 32;
+        solidArea.height = 32;
 
         setDefaultValues();
         getPlayerImage();
@@ -52,21 +59,48 @@ public class Player extends Entity{
 
     public void update(){
 
-        if(keyH.upPressed == true){
-            direction = "up";
-            y -= speed;   
-        }
-        if(keyH.downPressed == true){
-            direction = "down";
-            y += speed;   
-        }
-        if(keyH.leftPressed == true){
-            direction = "left";
-            x -= speed;   
-        }
-        if(keyH.rightPressed == true){
-            direction = "right";
-            x += speed;   
+        if(keyH.upPressed || keyH.downPressed || keyH.leftPressed || keyH.rightPressed){
+            
+
+            if(keyH.upPressed == true){
+                direction = "up";
+            }
+            if(keyH.downPressed == true){
+                direction = "down";
+            }
+            if(keyH.leftPressed == true){
+                direction = "left";
+            }
+            if(keyH.rightPressed == true){
+                direction = "right";
+            }
+
+            collisionOn = false;
+            gp.cChecker.checkTile(this);
+
+            if(!collisionOn){
+                switch(direction){
+                    case "up":
+                        y -= speed;   
+                        break;
+
+                    case "down":
+                        y += speed;   
+                        break;
+
+                    case "left":
+                        x -= speed;   
+                        break;
+                        
+                    case "right":
+                        x += speed;   
+                        break;
+
+                    default:
+                        break;
+                }
+                
+            }
         }
 
         spriteCounter++;

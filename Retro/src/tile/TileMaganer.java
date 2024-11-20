@@ -12,8 +12,8 @@ import retro.GamePanel;
 public class TileMaganer {
 
     GamePanel gp;
-    Tile[] tile;
-    int mapTileNum[][];
+    public Tile[] tile;
+    public int mapTileNum[][];
     String prefix = "/res/screens/screen";
     String sufix = ".txt";
 
@@ -34,9 +34,11 @@ public class TileMaganer {
 
             tile[0] = new Tile();
             tile[0].image = ImageIO.read(getClass().getResourceAsStream("/res/tiles/grass.png")); 
+            tile[0].collision = false;
 
             tile[1] = new Tile();
             tile[1].image = ImageIO.read(getClass().getResourceAsStream("/res/tiles/water.png"));
+            tile[1].collision = true;
             
             tile[2] = new Tile();
             tile[2].image = ImageIO.read(getClass().getResourceAsStream("/res/tiles/sand.png"));

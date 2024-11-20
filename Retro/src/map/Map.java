@@ -16,7 +16,7 @@ public class Map {
 
     GamePanel gp;
     Player player;
-    TileMaganer tileMaganer;
+    public TileMaganer tileMaganer;
     int mapScreenNum[][];
     int x, y;
 
