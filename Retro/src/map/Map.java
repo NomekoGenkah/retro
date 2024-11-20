@@ -36,31 +36,32 @@ public class Map {
             case "up":
                 if(withinBorder(mapScreenNum, x, y-1)){
                     y--;
+                    player.y = gp.screenHeight - 4;
                 }
                 break;
             case "down":
                 if(withinBorder(mapScreenNum, x, y+1)){
                     y++;
+                    player.y = 4;
                 }
                 break;
             case "left":
                 if(withinBorder(mapScreenNum, x-1, y)){
                     x--;
+                    player.x = gp.screenWidth - 4;
                 }
                 break;
             case "right":
                 if(withinBorder(mapScreenNum, x+1, y)){
                     x++;
+                    player.x = 4;
                 }
                 break;
             default:
                 break;
         }
-      //  if(direction != " "){
 
         tileMaganer.loadMap("/res/screens/screen" + mapScreenNum[x][y] + ".txt");
-      //  }
-
         //tileMaganer.loadMap("/res/screens/screen" + mapScreenNum[x][y] + ".txt");
     }
 
@@ -108,16 +109,12 @@ public class Map {
     public void update(int screenWidth, int screenHeight, int x, int y){
         String direction = " ";
         if(y == 0){
-            player.y = screenHeight - 4;
             direction = "up";
         }else if(y == screenHeight){
-            player.y = 4;
             direction = "down";
         }else if(x == 0){
-            player.x = screenWidth - 4;
             direction = "left";
         }else if(x == screenWidth){
-            player.x = 4;
             direction = "right";
         }
         if(direction != " "){

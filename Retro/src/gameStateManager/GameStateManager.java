@@ -19,7 +19,7 @@ public class GameStateManager {
         }else{
             this.activeState = states[0];
         }
-        System.out.println("activeState: "+ this.activeState);
+    //    System.out.println("activeState: "+ this.activeState);
     }
 
     public String getActiveState(){
