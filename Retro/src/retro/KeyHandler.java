@@ -37,6 +37,9 @@ public class KeyHandler implements KeyListener{
                 if(gp.ui.commandNum == 0){
                     gp.gameState = gp.playState;
                 }
+                if(gp.ui.commandNum == 2){
+                    System.exit(0);
+                }
             }
         }
 

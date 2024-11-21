@@ -28,8 +28,10 @@ public class GamePanel extends JPanel implements Runnable{
     //TileMaganer tileM = new TileMaganer(this);
     //SYSTEM
     KeyHandler keyH = new KeyHandler(this);
-    Thread gameThread;
     public CollisionChecker cChecker = new CollisionChecker(this);
+    Sound sound = new Sound();
+    Thread gameThread;
+
 
 
     //GameStateManager gStateManager = new GameStateManager(keyH);
@@ -62,6 +64,7 @@ public class GamePanel extends JPanel implements Runnable{
 
     public void setupGame(){
         gameState = titleState;
+    //    playMusic(0);
     }
 
     public void startGameThread(){
@@ -121,7 +124,7 @@ public class GamePanel extends JPanel implements Runnable{
         }
         if(gameState == pauseState){
         }
-        System.out.println("gameState: " + gameState);
+    //    System.out.println("gameState: " + gameState);
 /* 
         gStateManager.update();
 
@@ -152,6 +155,21 @@ public class GamePanel extends JPanel implements Runnable{
             g2.dispose();
 
         }
+    }
+
+    public void playMusic(int i){
+        sound.setFile(i);
+        sound.play();
+        sound.loop();
+    }
+
+    public void stopMusic(int i){
+        sound.stop();
+    }
+
+    public void playSE(int i){
+        sound.setFile(i);
+        sound.play();
     }
     
 }
