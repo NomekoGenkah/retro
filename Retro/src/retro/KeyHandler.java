@@ -5,21 +5,27 @@ import java.awt.event.KeyListener;
 
 public class KeyHandler implements KeyListener{
 
+    GamePanel gp;
     public boolean upPressed, downPressed, leftPressed, rightPressed;
     public boolean pPressed = false;
+
+    KeyHandler(GamePanel gp){
+        this.gp = gp;
+
+    }
 
     @Override
     public void keyPressed(KeyEvent e) {
         int code = e.getKeyCode();
 
         if(code == KeyEvent.VK_P){
-            if(!pPressed){
-                pPressed = true;
-            }else{
-                pPressed = false;
+            if(gp.gameState == gp.playState){
+                gp.gameState = gp.pauseState;
+            }
+            else if(gp.gameState == gp.pauseState){
+                gp.gameState = gp.playState;
             }
 
-            System.out.println("paused :" + pPressed);
         }
         if(code == KeyEvent.VK_W){
             upPressed = true;

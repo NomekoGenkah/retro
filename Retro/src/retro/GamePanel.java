@@ -1,7 +1,7 @@
 package retro;
 
 import entity.Player;
-import gameStateManager.GameStateManager;
+//import gameStateManager.GameStateManager;
 import map.Map;
 
 import java.awt.Color;
@@ -26,15 +26,21 @@ public class GamePanel extends JPanel implements Runnable{
     final int FPS = 60;
 
     //TileMaganer tileM = new TileMaganer(this);
-    KeyHandler keyH = new KeyHandler();
+    //SYSTEM
+    KeyHandler keyH = new KeyHandler(this);
     Thread gameThread;
     public CollisionChecker cChecker = new CollisionChecker(this);
 
-    GameStateManager gStateManager = new GameStateManager(keyH);
+
+    //GameStateManager gStateManager = new GameStateManager(keyH);
     Player player = new Player(this, keyH);
 
     Map map = new Map(this, player);
-    UI ui = new UI(this, gStateManager);
+    UI ui = new UI(this);
+    //GAME STATE
+    public int gameState;
+    public final int playState = 1;
+    public final int pauseState = 2;
 
 
     //default player xy
@@ -51,6 +57,10 @@ public class GamePanel extends JPanel implements Runnable{
         this.setFocusable(true);
         this.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
+    }
+
+    public void setupGame(){
+        gameState = playState;
     }
 
     public void startGameThread(){
@@ -104,12 +114,21 @@ public class GamePanel extends JPanel implements Runnable{
     }
 
     public void update(){
+        if(gameState == playState){
+            player.update();
+            map.update(screenWidth, screenHeight, player.x, player.y);
+        }
+        if(gameState == pauseState){
+        }
+        System.out.println("gameState: " + gameState);
+/* 
         gStateManager.update();
 
         if(gStateManager.isRunning()){
             player.update();
             map.update(screenWidth, screenHeight, player.x, player.y);
         }
+            */
     //    player.update();
     //    map.update(screenWidth, screenHeight, player.x, player.y);
     }

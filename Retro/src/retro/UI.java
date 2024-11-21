@@ -1,7 +1,5 @@
 package retro;
 
-import gameStateManager.GameStateManager;
-
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
@@ -14,12 +12,9 @@ public class UI {
     public boolean messageOn = false;
     public String message = "";
 
-    GameStateManager gameStateManager;
 
-
-    public UI(GamePanel gp, GameStateManager gameStateManager){
+    public UI(GamePanel gp){
         this.gp = gp;
-        this.gameStateManager = gameStateManager;
 
         arial_40 = new Font("Arial", Font.PLAIN, 40);
         arial_80B = new Font("Arial", Font.BOLD, 80);
@@ -34,11 +29,11 @@ public class UI {
         g2.setFont(arial_40);
         g2.setColor(Color.white);
 
-        if(gameStateManager.isRunning()){
+        if(gp.gameState == gp.playState){
             //
 
         }
-        if(!gameStateManager.isRunning()){
+        if(gp.gameState == gp.pauseState){
             drawPauseScreen();
         }
     }
