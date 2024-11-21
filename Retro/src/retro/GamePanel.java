@@ -39,6 +39,7 @@ public class GamePanel extends JPanel implements Runnable{
     UI ui = new UI(this);
     //GAME STATE
     public int gameState;
+    public final int titleState = 0;
     public final int playState = 1;
     public final int pauseState = 2;
 
@@ -51,7 +52,7 @@ public class GamePanel extends JPanel implements Runnable{
     public GamePanel(){
         
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
-        this.setBackground(Color.BLUE);
+        this.setBackground(Color.BLACK);
         this.setDoubleBuffered(true);
         this.addKeyListener(keyH);
         this.setFocusable(true);
@@ -60,7 +61,7 @@ public class GamePanel extends JPanel implements Runnable{
     }
 
     public void setupGame(){
-        gameState = playState;
+        gameState = titleState;
     }
 
     public void startGameThread(){
@@ -139,12 +140,18 @@ public class GamePanel extends JPanel implements Runnable{
 
         Graphics2D g2 = (Graphics2D) g;
 
-        map.draw(g2);
-        player.draw(g2);
-        ui.draw(g2);
+        if(gameState == titleState){
+            ui.draw(g2);
 
-        g2.dispose();
+        }
+        else{
+            map.draw(g2);
+            player.draw(g2);
+            ui.draw(g2);
+    
+            g2.dispose();
 
+        }
     }
     
 }
