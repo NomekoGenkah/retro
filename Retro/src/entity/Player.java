@@ -15,6 +15,10 @@ public class Player extends Entity{
     GamePanel gp;
     KeyHandler keyH;
 
+    public int playerState;
+    public final int idleState = 0;
+    public final int moveState = 1;
+
     public Player(GamePanel gp, KeyHandler keyH){
         this.gp = gp;
         this.keyH = keyH;
@@ -34,22 +38,20 @@ public class Player extends Entity{
         x = 100;
         y = 100;
         speed = 4;
-        direction = "down";
+        direction = " ";
     }
 
     public void getPlayerImage(){
         
 
         try {
-            up1 = ImageIO.read(getClass().getResourceAsStream("/res/player/boy_up_1.png"));
-            up2 = ImageIO.read(getClass().getResourceAsStream("/res/player/boy_up_2.png"));
-            down1 = ImageIO.read(getClass().getResourceAsStream("/res/player/boy_down_1.png"));
-            down2 = ImageIO.read(getClass().getResourceAsStream("/res/player/boy_down_2.png"));
-            left1 = ImageIO.read(getClass().getResourceAsStream("/res/player/boy_left_1.png"));
-            left2 = ImageIO.read(getClass().getResourceAsStream("/res/player/boy_left_2.png"));
-            right1 = ImageIO.read(getClass().getResourceAsStream("/res/player/boy_right_1.png"));
-            right2 = ImageIO.read(getClass().getResourceAsStream("/res/player/boy_right_2.png"));
-
+            for(int i = 0; i < idle.length; i++){
+                idle[i] = ImageIO.read(getClass().getResourceAsStream("/res/player/ezio_idle_" + i + ".png"));
+                up[i] = ImageIO.read(getClass().getResourceAsStream("/res/player/boy_up_" + i + ".png"));
+                down[i] = ImageIO.read(getClass().getResourceAsStream("/res/player/boy_down_" + i  + ".png"));
+                left[i] = ImageIO.read(getClass().getResourceAsStream("/res/player/boy_left_" + i + ".png"));
+                right[i] = ImageIO.read(getClass().getResourceAsStream("/res/player/boy_right_" + i + ".png"));
+            }
             
         } catch (IOException e) {
             e.printStackTrace();
@@ -58,6 +60,7 @@ public class Player extends Entity{
     }
 
     public void update(){
+        direction = " ";
 
         if(keyH.upPressed || keyH.downPressed || keyH.leftPressed || keyH.rightPressed){
             
@@ -104,16 +107,17 @@ public class Player extends Entity{
         }
 
         spriteCounter++;
+        
+        int frameLimit = direction.equals(" ") ? 3 : 2;
+
         if(spriteCounter > 20){
-            if(spriteNum == 1){
-                spriteNum = 2;
-            }else if(spriteNum == 2){
-                spriteNum = 1;
+            spriteNum++;
+            if(spriteNum >= frameLimit){
+                spriteNum = 0;
             }
             spriteCounter = 0;
         }
         //System.out.println("valor x: " + x + "  valor y: " + y);
-
     }
 
     public void draw(Graphics2D g2){
@@ -122,40 +126,23 @@ public class Player extends Entity{
 
     switch(direction){
         case "up":
-            if(spriteNum == 1){
-                image = up1;
-            }else
-            if(spriteNum == 2){
-                image = up2;
-            }
+            image = up[spriteNum];
             break;
+
         case "down":
-            if(spriteNum == 1){
-                image = down1;
-            }else
-            if(spriteNum == 2){
-                image = down2;
-            }
+            image = down[spriteNum];
             break;
+
         case "left":
-            if(spriteNum == 1){
-                image = left1;
-            }else
-            if(spriteNum == 2){
-                image = left2;
-            }
+            image = left[spriteNum];
             break;
+
         case "right":
-            if(spriteNum == 1){
-                image = right1;
-            }else
-            if(spriteNum == 2){
-                image = right2;
-            }
+            image = right[spriteNum];
             break;
 
         default:
-            image = down1;
+            image = idle[spriteNum];
             break;
     }
             

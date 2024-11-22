@@ -9,7 +9,10 @@ public class Entity {
     public int y;
     public int speed;
 
-    public BufferedImage up1, up2, down1, down2, left1, left2, right1, right2;
+    public final int frames = 3;
+
+    public BufferedImage[] up = new BufferedImage[frames], down = new BufferedImage[frames], left = new BufferedImage[frames], right = new BufferedImage[frames];
+    public BufferedImage[] idle = new BufferedImage[frames]; 
     public String direction;
 
     public int spriteCounter = 0;
