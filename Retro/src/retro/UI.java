@@ -3,11 +3,17 @@ package retro;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+
+import object.OBJ_HealthBar;
+import object.SuperObject;
 
 public class UI {
     GamePanel gp;
     Graphics2D g2;
     Font arial_40, arial_80B;
+
+    BufferedImage heartImage;
 
     public boolean messageOn = false;
     public String message = "";
@@ -20,6 +26,9 @@ public class UI {
 
         arial_40 = new Font("Arial", Font.PLAIN, 40);
         arial_80B = new Font("Arial", Font.BOLD, 80);
+
+        SuperObject heart = new OBJ_HealthBar(gp);
+        heartImage = heart.image;
 
     }
 
@@ -37,12 +46,26 @@ public class UI {
         }
 
         if(gp.gameState == gp.playState){
+            drawPlayerLife();
             //
 
         }
         if(gp.gameState == gp.pauseState){
+            drawPlayerLife();
             drawPauseScreen();
         }
+    }
+
+    public void drawPlayerLife(){
+        int x = gp.tileSize/2;
+        int y = gp.tileSize/2;
+
+        g2.setColor(Color.RED);
+        g2.fillRect(x+x, y+ y/2, x*gp.player.life*2, y); //vida faltan variables
+        g2.setColor(Color.BLACK);
+        g2.drawRect(x+x, y+ y/2, x*gp.player.maxLife*2, y); //borde faltan variables
+
+        g2.drawImage(heartImage, x, y, gp.tileSize, gp.tileSize,  null); //heart
     }
 
     public void drawTitleScreen(){
@@ -88,8 +111,6 @@ public class UI {
         if(commandNum == 2){
             g2.drawString(">", x - gp.tileSize, y);
         }
-
-
     }
     
     public void drawPauseScreen(){

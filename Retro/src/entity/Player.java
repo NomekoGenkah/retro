@@ -15,6 +15,8 @@ public class Player extends Entity{
     GamePanel gp;
     KeyHandler keyH;
 
+    BufferedImage image = null;
+
     public int playerState;
     public final int idleState = 0;
     public final int moveState = 1;
@@ -39,15 +41,17 @@ public class Player extends Entity{
         y = 100;
         speed = 4;
         direction = " ";
+        maxLife = 5;
+        life = 5;
     }
 
     public void getPlayerImage(){
         
 
         try {
-            for(int i = 0; i < idle.length; i++){
+            for(int i = 0; i < frames; i++){
                 idle[i] = ImageIO.read(getClass().getResourceAsStream("/res/player/ezio_idle_" + i + ".png"));
-                up[i] = ImageIO.read(getClass().getResourceAsStream("/res/player/boy_up_" + i + ".png"));
+                up[i] = ImageIO.read(getClass().getResourceAsStream("/res/player/ezio_up_" + i + ".png"));
                 down[i] = ImageIO.read(getClass().getResourceAsStream("/res/player/boy_down_" + i  + ".png"));
                 left[i] = ImageIO.read(getClass().getResourceAsStream("/res/player/boy_left_" + i + ".png"));
                 right[i] = ImageIO.read(getClass().getResourceAsStream("/res/player/boy_right_" + i + ".png"));
@@ -60,7 +64,6 @@ public class Player extends Entity{
     }
 
     public void update(){
-        direction = " ";
 
         if(keyH.upPressed || keyH.downPressed || keyH.leftPressed || keyH.rightPressed){
             
@@ -104,11 +107,13 @@ public class Player extends Entity{
                 }
                 
             }
-        }
+        }//else{
+          //  direction = " ";
+       // }
 
         spriteCounter++;
         
-        int frameLimit = direction.equals(" ") ? 3 : 2;
+        int frameLimit = direction.equals(" ") || direction.equals("up")? 3 : 2;
 
         if(spriteCounter > 20){
             spriteNum++;
@@ -122,7 +127,6 @@ public class Player extends Entity{
 
     public void draw(Graphics2D g2){
 
-    BufferedImage image = null;
 
     switch(direction){
         case "up":
