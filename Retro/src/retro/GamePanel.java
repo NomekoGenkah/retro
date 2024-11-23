@@ -3,6 +3,7 @@ package retro;
 import entity.Player;
 //import gameStateManager.GameStateManager;
 import map.Map;
+import monster.MON_GreenSlime;
 
 import java.awt.Color;
 import java.awt.Cursor;
@@ -32,13 +33,14 @@ public class GamePanel extends JPanel implements Runnable{
     Sound sound = new Sound();
     Thread gameThread;
 
-
-
-    //GameStateManager gStateManager = new GameStateManager(keyH);
+    //player y entidades
     Player player = new Player(this, keyH);
+    MON_GreenSlime[] greenSlime = new MON_GreenSlime[3];
 
     Map map = new Map(this, player);
     UI ui = new UI(this);
+    public EventHandler eHandler = new EventHandler(this);
+    AssetSetter aSetter = new AssetSetter(this);
     //GAME STATE
     public int gameState;
     public final int titleState = 0;
@@ -63,6 +65,7 @@ public class GamePanel extends JPanel implements Runnable{
     }
 
     public void setupGame(){
+        aSetter.setGreenSlime();
         gameState = titleState;
     //    playMusic(0);
     }
@@ -119,8 +122,17 @@ public class GamePanel extends JPanel implements Runnable{
 
     public void update(){
         if(gameState == playState){
+
+            for(int i = 0; i < greenSlime.length; i++){
+                if(greenSlime[i] != null){
+                    greenSlime[i].update();
+                }                
+            }
+
+
             player.update();
             map.update(screenWidth, screenHeight, player.x, player.y);
+
         }
         if(gameState == pauseState){
         }
@@ -149,8 +161,17 @@ public class GamePanel extends JPanel implements Runnable{
         }
         else{
             map.draw(g2);
+
+            for(int i = 0; i < greenSlime.length; i++){
+                if(greenSlime[i] != null){
+                    greenSlime[i].draw(g2);
+                }
+            }
+
             player.draw(g2);
             ui.draw(g2);
+
+
     
             g2.dispose();
 

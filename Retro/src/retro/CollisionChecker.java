@@ -66,4 +66,10 @@ public class CollisionChecker {
         return gp.player.x >= 0 && gp.player.x < gp.screenWidth - (gp.screenWidth/15) && gp.player.y >= 0 && gp.player.y < gp.screenHeight - (gp.screenHeight/11);
     }
 
+    //monster npc
+   // public int checkEntity(Entity entity, Entity[] target){
+
+
+    //}
+
 }

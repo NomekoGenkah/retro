@@ -12,7 +12,6 @@ import javax.imageio.ImageIO;
 
 public class Player extends Entity{
 
-    GamePanel gp;
     KeyHandler keyH;
 
     BufferedImage image = null;
@@ -22,7 +21,7 @@ public class Player extends Entity{
     public final int moveState = 1;
 
     public Player(GamePanel gp, KeyHandler keyH){
-        this.gp = gp;
+        super(gp);
         this.keyH = keyH;
 
         solidArea = new Rectangle();
@@ -81,8 +80,12 @@ public class Player extends Entity{
                 direction = "right";
             }
 
+            //colisiones
             collisionOn = false;
             gp.cChecker.checkTile(this);
+
+            //evento
+            gp.eHandler.checkEvent();
 
             if(!collisionOn){
                 switch(direction){
@@ -107,9 +110,7 @@ public class Player extends Entity{
                 }
                 
             }
-        }//else{
-          //  direction = " ";
-       // }
+        }
 
         spriteCounter++;
         
