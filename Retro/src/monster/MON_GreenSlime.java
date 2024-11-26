@@ -1,6 +1,6 @@
 package monster;
 
-import java.util.Random;
+//import java.util.Random;
 
 import javax.imageio.ImageIO;
 

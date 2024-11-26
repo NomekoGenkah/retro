@@ -38,7 +38,7 @@ public class Player extends Entity{
 
         x = 100;
         y = 100;
-        speed = 4;
+        speed = 3;
         direction = " ";
         maxLife = 5;
         life = 5;
@@ -52,8 +52,8 @@ public class Player extends Entity{
                 idle[i] = ImageIO.read(getClass().getResourceAsStream("/res/player/ezio_idle_" + i + ".png"));
                 up[i] = ImageIO.read(getClass().getResourceAsStream("/res/player/ezio_up_" + i + ".png"));
                 down[i] = ImageIO.read(getClass().getResourceAsStream("/res/player/boy_down_" + i  + ".png"));
-                left[i] = ImageIO.read(getClass().getResourceAsStream("/res/player/boy_left_" + i + ".png"));
-                right[i] = ImageIO.read(getClass().getResourceAsStream("/res/player/boy_right_" + i + ".png"));
+                left[i] = ImageIO.read(getClass().getResourceAsStream("/res/player/ezio_left_" + i + ".png"));
+                right[i] = ImageIO.read(getClass().getResourceAsStream("/res/player/ezio_right_" + i + ".png"));
             }
             
         } catch (IOException e) {
