@@ -111,6 +111,15 @@ public class UI {
     }
     
     public void drawPauseScreen(){
+
+        g2.setColor(Color.DARK_GRAY);
+        g2.fillRect(gp.screenWidth / 3 - 10, gp.screenHeight / 5 - 10, gp.screenWidth / 3 + 20, gp.screenHeight/2+20);
+
+        g2.setColor(Color.gray);
+        g2.fillRect(gp.screenWidth/3, gp.screenHeight/5, gp.screenWidth/3, gp.screenHeight/2);
+
+        g2.setColor(Color.black);
+
         g2.setFont(g2.getFont().deriveFont(Font.ITALIC, 34f));
         String text = "PAUSED";
 
