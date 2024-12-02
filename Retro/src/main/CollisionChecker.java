@@ -63,10 +63,10 @@ public class CollisionChecker {
         //entity.collisionOn = false;
     
         // Calculate the entity's current position
-        int entityLeftWorldX = entity.x + entity.solidArea.x;
-        int entityRightWorldX = entity.x + entity.solidArea.x + entity.solidArea.width;
-        int entityTopWorldY = entity.y + entity.solidArea.y;
-        int entityBottomWorldY = entity.y + entity.solidArea.y + entity.solidArea.height;
+    //    int entityLeftWorldX = entity.x + entity.solidArea.x;
+    //    int entityRightWorldX = entity.x + entity.solidArea.x + entity.solidArea.width;
+    //    int entityTopWorldY = entity.y + entity.solidArea.y;
+    //    int entityBottomWorldY = entity.y + entity.solidArea.y + entity.solidArea.height;
     
         // Calculate the entity's future position based on its direction
         int entityNextX = entity.x;
@@ -151,7 +151,7 @@ public class CollisionChecker {
 
 
 
-
+/* 
     private int getDirectionOffsetX(String direction) {
         return switch (direction) {
             case "left" -> -1;
@@ -167,6 +167,7 @@ public class CollisionChecker {
             default -> 0;
         };
     }
+*/
 
 
 

@@ -111,21 +111,37 @@ public class UI {
     }
     
     public void drawPauseScreen(){
+        g2.setFont(g2.getFont().deriveFont(Font.ITALIC, 34f));
         String text = "PAUSED";
 
         int x = getXforCenteredText(text);
-        int y = gp.screenHeight/2;
+        int y = gp.screenHeight/4;
 
         g2.drawString(text, x, y);
 
-        g2.setColor(Color.WHITE);
-        g2.setFont(g2.getFont().deriveFont(Font.ITALIC, 24f));
-
-        text = "NEW GAME";
+        text = "CONTINUE";
         x = getXforCenteredText(text);
-        y += gp.tileSize*4;
+        y += gp.tileSize*2;
         g2.drawString(text, x, y);
+        if(commandNum == 0){
+            g2.drawString(">", x - gp.tileSize, y);
+        }
 
+        text = "OPTIONS";
+        x = getXforCenteredText(text);
+        y += gp.tileSize;
+        g2.drawString(text, x, y);
+        if(commandNum == 1){
+            g2.drawString(">", x - gp.tileSize, y);
+        }
+
+        text = "QUIT";
+        x = getXforCenteredText(text);
+        y += gp.tileSize;
+        g2.drawString(text, x, y);
+        if(commandNum == 2){
+            g2.drawString(">", x - gp.tileSize, y);
+        }
 
     }
 
