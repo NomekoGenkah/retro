@@ -1,4 +1,4 @@
-package retro;
+package main;
 
 import entity.Entity;
 
@@ -67,9 +67,16 @@ public class CollisionChecker {
     }
 
     //monster npc
-   // public int checkEntity(Entity entity, Entity[] target){
+    public int checkEntity(Entity entity, Entity[] target){
+        int index = 999;
+
+        //or(int i = 0; i < gp; i++){
+
+            
+        //}
 
 
-    //}
+        return 0;
+    }
 
 }

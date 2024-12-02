@@ -38,15 +38,13 @@ public class Player extends Entity{
 
         x = 100;
         y = 100;
-        speed = 3;
+        speed = 5;
         direction = " ";
         maxLife = 5;
         life = 5;
     }
 
     public void getPlayerImage(){
-        
-
         try {
             for(int i = 0; i < frames; i++){
                 idle[i] = ImageIO.read(getClass().getResourceAsStream("/res/player/ezio_idle_" + i + ".png"));

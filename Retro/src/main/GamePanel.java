@@ -67,7 +67,7 @@ public class GamePanel extends JPanel implements Runnable{
     public void setupGame(){
         aSetter.setGreenSlime();
         gameState = titleState;
-    //    playMusic(0);
+        //playMusic(0);
     }
 
     public void startGameThread(){
