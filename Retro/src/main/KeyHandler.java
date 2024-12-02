@@ -1,23 +1,22 @@
-package retro;
+package main;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class KeyHandler implements KeyListener{
-
     GamePanel gp;
     public boolean upPressed, downPressed, leftPressed, rightPressed;
     public boolean pPressed = false;
-
+    
     KeyHandler(GamePanel gp){
         this.gp = gp;
-
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
         int code = e.getKeyCode();
-
+        System.out.println(code);
+ 
         if(gp.gameState == gp.titleState){
 
             if(code == KeyEvent.VK_W){
@@ -43,6 +42,7 @@ public class KeyHandler implements KeyListener{
             }
         }
 
+
         if(code == KeyEvent.VK_P){
             if(gp.gameState == gp.playState){
                 gp.gameState = gp.pauseState;
@@ -64,8 +64,6 @@ public class KeyHandler implements KeyListener{
         if(code == KeyEvent.VK_D){
             rightPressed = true;
         }
-
-      //  throw new UnsupportedOperationException("Unimplemented method 'keyPressed'");
     }
 
     @Override
@@ -92,5 +90,6 @@ public class KeyHandler implements KeyListener{
         // TODO Auto-generated method stub
         //throw new UnsupportedOperationException("Unimplemented method 'keyTyped'");
     }
-    
+
+
 }

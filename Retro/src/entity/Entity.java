@@ -1,14 +1,14 @@
 package entity;
 
+import main.GamePanel;
+
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.util.Random;
 
-import retro.GamePanel;
 
-public abstract class Entity {
-
+public class Entity {
     GamePanel gp;
     public int x, y;
     public int speed;
@@ -35,8 +35,6 @@ public abstract class Entity {
 
     public Entity(GamePanel gp){
         this.gp = gp;
-
-        //direction = "down";
     }
 
     public void setAction(){
@@ -72,7 +70,9 @@ public abstract class Entity {
     public void update(){
         setAction();
         collisionOn = false;
-        gp.cChecker.checkTile(this);
+        gp.collisionChecker.checkEntityCollision(this, gp.player);
+        gp.collisionChecker.checkTileCollision(this);
+
 
         if(!collisionOn){
             switch(direction){
@@ -114,9 +114,6 @@ public abstract class Entity {
             spriteCounter = 0;
         }
 
-
-
-
     }
 
     public void draw(Graphics2D g2){
@@ -146,8 +143,6 @@ public abstract class Entity {
         }
 
         g2.drawImage(image, x, y, gp.tileSize, gp.tileSize, null);
-
-
     }
 
     

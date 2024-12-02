@@ -1,22 +1,21 @@
-package retro;
+package main;
 
+import javax.swing.JPanel;
+
+import entity.Entity;
 import entity.Player;
-//import gameStateManager.GameStateManager;
-import map.Map;
-import monster.MON_GreenSlime;
+import mapManager.MapManager;
 
 import java.awt.Color;
-import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
-import javax.swing.JPanel;
+public class GamePanel extends JPanel implements Runnable {
 
-public class GamePanel extends JPanel implements Runnable{
-
+    
     final int originalTileSize = 16; //16
-    final int scale = 3;
+    final int scale = 4;
     
     public final int tileSize = originalTileSize * scale; //48x48 tile
     public final int maxScreenCol = 16;
@@ -26,60 +25,52 @@ public class GamePanel extends JPanel implements Runnable{
 
     final int FPS = 60;
 
-    //TileMaganer tileM = new TileMaganer(this);
-    //SYSTEM
-    KeyHandler keyH = new KeyHandler(this);
-    public CollisionChecker cChecker = new CollisionChecker(this);
-    Sound sound = new Sound();
-    Thread gameThread;
-
-    //player y entidades
-    Player player = new Player(this, keyH);
-    MON_GreenSlime[] greenSlime = new MON_GreenSlime[3];
-
-    Map map = new Map(this, player);
-    UI ui = new UI(this);
-    public EventHandler eHandler = new EventHandler(this);
-    AssetSetter aSetter = new AssetSetter(this);
-    //GAME STATE
+    //ESTADOS DE JUEGO
     public int gameState;
     public final int titleState = 0;
     public final int playState = 1;
     public final int pauseState = 2;
 
+    //system
+    KeyHandler keyH = new KeyHandler(this);
+    Sound sound = new Sound();
+    Thread gameThread;
+    public CollisionChecker collisionChecker = new CollisionChecker(this);
+    AssetSetter aSetter = new AssetSetter(this);
+    //player y entidades
+    public Player player = new Player(this, keyH);
+    public Entity[] entities = new Entity[3];
 
-    //default player xy
-    int playerX = 100;
-    int playerY = 100;
-    int playerSpeed = 4;
+    //Mapa
+    MapManager mapM = new MapManager(this, player);
 
-    public GamePanel(){
-        
+    //UI
+    UI ui = new UI(this);
+
+
+    GamePanel(){
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setBackground(Color.BLACK);
         this.setDoubleBuffered(true);
-        this.addKeyListener(keyH);
         this.setFocusable(true);
-        this.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        this.addKeyListener(keyH);
 
     }
 
     public void setupGame(){
-        aSetter.setGreenSlime();
         gameState = titleState;
+        aSetter.setGreenSlime();
         //playMusic(0);
     }
 
     public void startGameThread(){
-
         gameThread = new Thread(this);
         gameThread.start();
-
     }
 
     @Override
-    public void run() {
-
+    public void run(){
+        
         double drawInterval = 1000000000/FPS;
         double delta = 0;
         long lastTime = System.nanoTime();
@@ -107,77 +98,49 @@ public class GamePanel extends JPanel implements Runnable{
                 drawCount = 0;
                 timer = 0;
             }
-
-
-            //System.out.println("running");
-           // update();
-
-           // repaint();
-            
         }
-        
-
-        //throw new UnsupportedOperationException("Unimplemented method 'run'");
     }
 
+    //logica
     public void update(){
+        //System.out.println(gameState);
         if(gameState == playState){
+            player.update();
 
-            for(int i = 0; i < greenSlime.length; i++){
-                if(greenSlime[i] != null){
-                    greenSlime[i].update();
+            for(int i = 0; i < entities.length; i++){
+                if(entities[i] != null){
+                    entities[i].update();
                 }                
             }
-
-
-            player.update();
-            map.update(screenWidth, screenHeight, player.x, player.y);
-
+            mapM.update();
         }
-        if(gameState == pauseState){
-        }
-    //    System.out.println("gameState: " + gameState);
-/* 
-        gStateManager.update();
-
-        if(gStateManager.isRunning()){
-            player.update();
-            map.update(screenWidth, screenHeight, player.x, player.y);
-        }
-            */
-    //    player.update();
-    //    map.update(screenWidth, screenHeight, player.x, player.y);
     }
-
+    
+    //dibujar
     public void paintComponent(Graphics g){
-
         super.paintComponent(g);
+        Graphics2D g2 = (Graphics2D)g;
 
-        Graphics2D g2 = (Graphics2D) g;
 
         if(gameState == titleState){
-            ui.draw(g2);
+        }else{
 
-        }
-        else{
-            map.draw(g2);
+            mapM.draw(g2);
 
-            for(int i = 0; i < greenSlime.length; i++){
-                if(greenSlime[i] != null){
-                    greenSlime[i].draw(g2);
+            for(int i = 0; i < entities.length; i++){
+                if(entities[i] != null){
+                    entities[i].draw(g2);
                 }
             }
 
             player.draw(g2);
-            ui.draw(g2);
-
-
-    
-            g2.dispose();
-
         }
+        ui.draw(g2);
+
+        g2.dispose();
     }
 
+    //Musica
     public void playMusic(int i){
         sound.setFile(i);
         sound.play();

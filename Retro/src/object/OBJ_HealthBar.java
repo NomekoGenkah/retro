@@ -2,14 +2,13 @@ package object;
 
 import javax.imageio.ImageIO;
 
-import retro.GamePanel;
+import main.GamePanel;
 
-public class OBJ_HealthBar extends SuperObject{
+public class OBJ_HealthBar extends Object{
     GamePanel gp;
 
     public OBJ_HealthBar(GamePanel gp){
         this.gp = gp;
-
         name = "Heart";
 
         try {
@@ -18,10 +17,5 @@ public class OBJ_HealthBar extends SuperObject{
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
-
-
     }
-    
 }

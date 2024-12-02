@@ -1,4 +1,4 @@
-package retro;
+package main;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -6,7 +6,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 import object.OBJ_HealthBar;
-import object.SuperObject;
+import object.Object;
 
 public class UI {
     GamePanel gp;
@@ -20,19 +20,16 @@ public class UI {
 
     public int commandNum = 0;
 
-
     public UI(GamePanel gp){
         this.gp = gp;
 
         arial_40 = new Font("Arial", Font.PLAIN, 40);
         arial_80B = new Font("Arial", Font.BOLD, 80);
 
-        SuperObject heart = new OBJ_HealthBar(gp);
+        Object heart = new OBJ_HealthBar(gp);
         heartImage = heart.image;
 
     }
-
-
 
     public void draw(Graphics2D g2){
         this.g2 = g2;
@@ -120,6 +117,16 @@ public class UI {
         int y = gp.screenHeight/2;
 
         g2.drawString(text, x, y);
+
+        g2.setColor(Color.WHITE);
+        g2.setFont(g2.getFont().deriveFont(Font.ITALIC, 24f));
+
+        text = "NEW GAME";
+        x = getXforCenteredText(text);
+        y += gp.tileSize*4;
+        g2.drawString(text, x, y);
+
+
     }
 
     public int getXforCenteredText(String text){
@@ -127,5 +134,4 @@ public class UI {
         
         return gp.screenWidth/2 - length/2;
     }
-    
 }

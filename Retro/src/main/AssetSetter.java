@@ -1,10 +1,10 @@
-package retro;
+package main;
 
-import monster.MON_GreenSlime;
+import entity.MON_GreenSlime;
 
 public class AssetSetter {
 
-    GamePanel gp;
+        GamePanel gp;
 
     public AssetSetter(GamePanel gp){
         this.gp = gp;
@@ -15,9 +15,10 @@ public class AssetSetter {
     }
 
     public void setGreenSlime(){
-        gp.greenSlime[0] = new MON_GreenSlime(gp);
-        gp.greenSlime[0].x = gp.tileSize * 3;
-        gp.greenSlime[0].y = gp.tileSize * 3;
+        
+        gp.entities[0] = new MON_GreenSlime(gp);
+        gp.entities[0].x = gp.tileSize * 3;
+        gp.entities[0].y = gp.tileSize * 3;
     }
     
 }
