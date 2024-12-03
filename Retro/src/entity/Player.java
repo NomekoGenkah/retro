@@ -3,17 +3,22 @@ package entity;
 import main.GamePanel;
 import main.KeyHandler;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 
 
 public class Player extends Entity{
-    KeyHandler keyH;
+    int mouseX, mouseY;
+    int playerRadius = gp.tileSize/2;
+    int daggerRadius = 20;
 
-    BufferedImage image = null;
+    KeyHandler keyH;
+    BufferedImage image = null, dagger = null;
 
     public Player(GamePanel gp, KeyHandler keyH){
         super(gp);
@@ -27,6 +32,7 @@ public class Player extends Entity{
 
         setDefaultValues();
         getPlayerImage();
+        getDaggerImage();
     }
 
     public void setDefaultValues(){
@@ -51,11 +57,24 @@ public class Player extends Entity{
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
 
+    public void getDaggerImage(){
+        try{
+            dagger = ImageIO.read(getClass().getResourceAsStream("/res/weapons/dagger.png"));
+            
+        }catch(Exception e){
+            e.printStackTrace();
+        }
     }
 
     public void contactMonster(){
         life -= 1;
+    }
+
+    public void updateMousePosition(int x, int y){
+        this.mouseX = x;
+        this.mouseY = y;
     }
 
     public void update(){
@@ -91,9 +110,6 @@ public class Player extends Entity{
                     }
                 }
             }
-
-
-            //evento
         //    gp.eHandler.checkEvent();
             if(!collisionOn){
 
@@ -134,7 +150,6 @@ public class Player extends Entity{
         //System.out.println("valor x: " + x + "  valor y: " + y);
     }
 
-
     public void draw(Graphics2D g2){
         switch(direction){
             case "up":
@@ -159,6 +174,78 @@ public class Player extends Entity{
         }
                 
         g2.drawImage(image, x, y, gp.tileSize, gp.tileSize, null);
+        drawDagger(g2);
     
-        }
+    }
+
+    public void drawDagger(Graphics2D g2){
+        // Calculate the player's center
+        int centerX = x + gp.tileSize / 2;
+        int centerY = y + gp.tileSize / 2;
+    
+        // Calculate the angle to the mouse
+        double angle = Math.atan2(mouseY - centerY, mouseX - centerX);
+    
+        // Define the radius of the player's "circle"
+        int playerRadius = gp.tileSize / 2; // The player's "circle" radius
+    
+        // Adjust the dagger's position so its TIP starts outside the circle
+        int daggerX = centerX + (int) ((playerRadius + 16) * Math.cos(angle)); // Add the distance from the center to the dagger's tip (16 px)
+        int daggerY = centerY + (int) ((playerRadius + 16) * Math.sin(angle));
+    
+        // Offset the sprite so its tip aligns with the calculated dagger position
+        int spriteX = daggerX; // Center of sprite is 16px left of the tip
+        int spriteY = daggerY;      // Sprite's top edge aligns with the tip
+    
+        // Rotate and draw the dagger
+        Graphics2D g2Rotated = (Graphics2D) g2.create(); // Create a copy for rotation
+        g2Rotated.rotate(angle, daggerX, daggerY);       // Rotate around the dagger's tip
+        g2Rotated.drawImage(dagger, spriteX, spriteY, null); // Draw the dagger
+        g2Rotated.dispose(); // Dispose the rotated Graphics2D to avoid interference
+    }
+    
+
+
+
+/* 
+    public void drawDagger(Graphics2D g2) {
+        if(dagger == null) return;
+
+        // Calculate player center
+        int centerX = x + gp.tileSize / 2;
+        int centerY = y + gp.tileSize / 2;
+
+        // Calculate angle to the mouse
+        double angle = Math.atan2(mouseY - centerY, mouseX - centerX);
+
+        int daggerX = centerX + (int) (playerRadius * Math.cos(angle)) - (dagger.getWidth() / 2);
+        int daggerY = centerY + (int) (playerRadius * Math.sin(angle)) - (dagger.getHeight() / 2);
+
+        AffineTransform transform = new AffineTransform();
+        transform.translate(daggerX, daggerY);
+
+    //    int daggerWidth = dagger.getWidth()/2/2;
+    //    int daggerHeight = dagger.getHeight()/2/2;
+        
+    //    transform.rotate(angle, daggerWidth/2, daggerHeight/2);
+
+        Graphics2D g2Rotated = (Graphics2D) g2.create();
+
+        g2Rotated.rotate(angle, centerX, centerY);       // Rotate around the player's center
+        g2Rotated.drawImage(dagger, daggerX, daggerY, null); // Draw the dagger
+        g2Rotated.dispose(); // Dispose the rotated Graphics2D to prevent interference
+
+
+        // Calculate the dagger's tip position
+        //int daggerTipX = centerX + (int) ((playerRadius + daggerRadius) * Math.cos(angle));
+        //int daggerTipY = centerY + (int) ((playerRadius + daggerRadius) * Math.sin(angle));
+
+        // Draw the dagger as a line
+        //g2.drawImage(dagger, transform, null);
+        //g2.setColor(Color.RED);
+        //g2.drawLine(daggerStartX, daggerStartY, daggerTipX, daggerTipY);
+    }
+*/
+
+
 }

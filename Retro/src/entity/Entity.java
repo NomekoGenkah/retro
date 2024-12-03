@@ -83,7 +83,7 @@ public class Entity {
 
                 case "down":
                     y += speed;
-                    if(y >= gp.screenHeight - gp.tileSize) y = gp.screenHeight - gp.tileSize*2;   
+                    if(y >= gp.screenHeight - gp.tileSize) y = gp.screenHeight - gp.tileSize;   
                     break;
 
                 case "left":
@@ -93,7 +93,7 @@ public class Entity {
                     
                 case "right":
                     x += speed;   
-                    if(x >= gp.screenWidth - gp.tileSize) x = gp.screenWidth - gp.tileSize*2;   
+                    if(x >= gp.screenWidth - gp.tileSize) x = gp.screenWidth - gp.tileSize;   
                     break;
 
                 default:

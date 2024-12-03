@@ -10,8 +10,10 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
 
-public class GamePanel extends JPanel implements Runnable {
+public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
 
     
     final int originalTileSize = 16; //16
@@ -54,6 +56,7 @@ public class GamePanel extends JPanel implements Runnable {
         this.setDoubleBuffered(true);
         this.setFocusable(true);
         this.addKeyListener(keyH);
+        this.addMouseMotionListener(this);
 
     }
 
@@ -134,6 +137,7 @@ public class GamePanel extends JPanel implements Runnable {
             }
 
             player.draw(g2);
+            //player.drawDagger(g2);
         }
         ui.draw(g2);
 
@@ -155,5 +159,18 @@ public class GamePanel extends JPanel implements Runnable {
         sound.setFile(i);
         sound.play();
     }
+
+    @Override
+    public void mouseMoved(MouseEvent e){
+        player.updateMousePosition(e.getX(), e.getY());
+        //repaint();
+    }
+
+    @Override
+    public void mouseDragged(MouseEvent e) {
+        // Not used but required for the interface
+    }
+
+
     
 }
