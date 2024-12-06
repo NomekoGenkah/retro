@@ -106,8 +106,8 @@ public class CollisionChecker {
             // Check for intersection
             if (entityFutureSolidArea.intersects(targetSolidArea)){
                 entity.collisionOn = true;
-                entity.life--;
-                gp.gameState = gp.pauseState;
+                //entity.life--;
+                //gp.gameState = gp.pauseState;
             }
         }
     }

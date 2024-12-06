@@ -39,6 +39,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
     Thread gameThread;
     public CollisionChecker collisionChecker = new CollisionChecker(this);
     AssetSetter aSetter = new AssetSetter(this);
+    SaveManager saveM = new SaveManager(this);
     //player y entidades
     public Player player = new Player(this, keyH);
     public Entity[] entities = new Entity[3];
@@ -106,6 +107,9 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
 
     //logica
     public void update(){
+        if(gameState == pauseState){
+        //    saveM.saveGame();
+        }
         //System.out.println(gameState);
         if(gameState == playState){
             player.update();

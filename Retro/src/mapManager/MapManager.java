@@ -17,7 +17,8 @@ public class MapManager {
 
     // Map and screen variables
     int mapScreenNum[][];
-    int x, y;
+    public int x;
+    public int y;
     final int mapSize = 3;
 
     // Edge buffer for smoother map transitions

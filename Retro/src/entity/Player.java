@@ -17,6 +17,10 @@ public class Player extends Entity{
     int playerRadius = gp.tileSize/2;
     int daggerRadius = 20;
 
+    public int playerState;
+    final int playState = 0;
+    public final int deathState = 1;
+
     KeyHandler keyH;
     BufferedImage image = null, dagger = null;
 
@@ -36,12 +40,13 @@ public class Player extends Entity{
     }
 
     public void setDefaultValues(){
+        playerState = playState;
         x = 100;
         y = 100;
         speed = 4;
         direction = " ";
         maxLife = 5;
-        life = 4;
+        life = 2;
     }
 
     public void getPlayerImage(){
@@ -77,63 +82,82 @@ public class Player extends Entity{
         this.mouseY = y;
     }
 
-    public void update(){
-        //System.out.println(direction);
+    public void onDeath(){
+        playerState = deathState;
 
-        if(keyH.upPressed || keyH.downPressed || keyH.leftPressed || keyH.rightPressed){
+    }
+
+    public void update(){
+        if(life <= 0){
+            playerState = deathState;
+        }
+        if(playerState == deathState){
+            
+        }
+
+        if(playerState == playState){
+
+            if(keyH.upPressed || keyH.downPressed || keyH.leftPressed || keyH.rightPressed){
             
 
-            if(keyH.upPressed == true){
-                direction = "up";
-            }
-            if(keyH.downPressed == true){
-                direction = "down";
-            }
-            if(keyH.leftPressed == true){
-                direction = "left";
-            }
-            if(keyH.rightPressed == true){
-                direction = "right";
-            }
-            System.out.println(direction);
+                if(keyH.upPressed == true){
+                    direction = "up";
+                }
+                if(keyH.downPressed == true){
+                    direction = "down";
+                }
+                if(keyH.leftPressed == true){
+                    direction = "left";
+                }
+                if(keyH.rightPressed == true){
+                    direction = "right";
+                }
+                System.out.println(direction);
+    
+                //colisiones
+                collisionOn = false;
 
-            //colisiones
-            collisionOn = false;
-            gp.collisionChecker.checkTileCollision(this);
-
-            for(int i = 0; i < gp.entities.length; i++){
-                if(gp.entities[i] != null){
-                    gp.collisionChecker.checkEntityCollision(this, gp.entities[i]);
-                    if(collisionOn){
-                        //contactMonster();
-                        break;
+                for(int i = 0; i < gp.entities.length; i++){
+                    if(gp.entities[i] != null){
+                        gp.collisionChecker.checkEntityCollision(this, gp.entities[i]);
+                        if(collisionOn){
+                            contactMonster();
+                            break;
+                        }
                     }
                 }
-            }
-        //    gp.eHandler.checkEvent();
-            if(!collisionOn){
 
-                switch(direction){
-                    case "up":
-                        y -= speed;   
-                        break;
+                gp.collisionChecker.checkTileCollision(this);
     
-                    case "down":
-                        y += speed;   
-                        break;
+
+            //    gp.eHandler.checkEvent();
+                if(!collisionOn){
     
-                    case "left":
-                        x -= speed;   
-                        break;
-                        
-                    case "right":
-                        x += speed;   
-                        break;
-    
-                    default:
-                        break;
-                }
-            }            
+                    switch(direction){
+                        case "up":
+                            y -= speed;   
+                            break;
+        
+                        case "down":
+                            y += speed;   
+                            break;
+        
+                        case "left":
+                            x -= speed;   
+                            break;
+                            
+                        case "right":
+                            x += speed;   
+                            break;
+        
+                        default:
+                            break;
+                    }
+                }            
+            }
+
+
+
         }
 
         spriteCounter++;
@@ -147,7 +171,6 @@ public class Player extends Entity{
             }
             spriteCounter = 0;
         }
-        //System.out.println("valor x: " + x + "  valor y: " + y);
     }
 
     public void draw(Graphics2D g2){
@@ -190,8 +213,8 @@ public class Player extends Entity{
         int playerRadius = gp.tileSize / 2; // The player's "circle" radius
     
         // Adjust the dagger's position so its TIP starts outside the circle
-        int daggerX = centerX + (int) ((playerRadius + 16) * Math.cos(angle)); // Add the distance from the center to the dagger's tip (16 px)
-        int daggerY = centerY + (int) ((playerRadius + 16) * Math.sin(angle));
+        int daggerX = centerX + (int) ((playerRadius + 8) * Math.cos(angle)); // Add the distance from the center to the dagger's tip (16 px)
+        int daggerY = centerY + (int) ((playerRadius + 8) * Math.sin(angle));
     
         // Offset the sprite so its tip aligns with the calculated dagger position
         int spriteX = daggerX; // Center of sprite is 16px left of the tip
@@ -203,49 +226,5 @@ public class Player extends Entity{
         g2Rotated.drawImage(dagger, spriteX, spriteY, null); // Draw the dagger
         g2Rotated.dispose(); // Dispose the rotated Graphics2D to avoid interference
     }
-    
-
-
-
-/* 
-    public void drawDagger(Graphics2D g2) {
-        if(dagger == null) return;
-
-        // Calculate player center
-        int centerX = x + gp.tileSize / 2;
-        int centerY = y + gp.tileSize / 2;
-
-        // Calculate angle to the mouse
-        double angle = Math.atan2(mouseY - centerY, mouseX - centerX);
-
-        int daggerX = centerX + (int) (playerRadius * Math.cos(angle)) - (dagger.getWidth() / 2);
-        int daggerY = centerY + (int) (playerRadius * Math.sin(angle)) - (dagger.getHeight() / 2);
-
-        AffineTransform transform = new AffineTransform();
-        transform.translate(daggerX, daggerY);
-
-    //    int daggerWidth = dagger.getWidth()/2/2;
-    //    int daggerHeight = dagger.getHeight()/2/2;
-        
-    //    transform.rotate(angle, daggerWidth/2, daggerHeight/2);
-
-        Graphics2D g2Rotated = (Graphics2D) g2.create();
-
-        g2Rotated.rotate(angle, centerX, centerY);       // Rotate around the player's center
-        g2Rotated.drawImage(dagger, daggerX, daggerY, null); // Draw the dagger
-        g2Rotated.dispose(); // Dispose the rotated Graphics2D to prevent interference
-
-
-        // Calculate the dagger's tip position
-        //int daggerTipX = centerX + (int) ((playerRadius + daggerRadius) * Math.cos(angle));
-        //int daggerTipY = centerY + (int) ((playerRadius + daggerRadius) * Math.sin(angle));
-
-        // Draw the dagger as a line
-        //g2.drawImage(dagger, transform, null);
-        //g2.setColor(Color.RED);
-        //g2.drawLine(daggerStartX, daggerStartY, daggerTipX, daggerTipY);
-    }
-*/
-
 
 }

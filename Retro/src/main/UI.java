@@ -51,6 +51,11 @@ public class UI {
             drawPlayerLife();
             drawPauseScreen();
         }
+
+        if(gp.player.playerState == gp.player.deathState){
+            drawDeathScreen();
+
+        }
     }
 
     public void drawPlayerLife(){
@@ -151,6 +156,20 @@ public class UI {
         if(commandNum == 2){
             g2.drawString(">", x - gp.tileSize, y);
         }
+
+    }
+
+    public void drawDeathScreen(){
+        String text = "DEAD";
+
+        int x = getXforCenteredText(text);
+        int y = gp.screenHeight/4;
+        g2.drawString(text, x, y);
+
+        text = "QUIT";
+        x = getXforCenteredText(text);
+        y += gp.tileSize;
+        g2.drawString(text, x, y);
 
     }
 
