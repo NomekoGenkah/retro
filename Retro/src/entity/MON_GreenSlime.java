@@ -5,6 +5,9 @@ import javax.imageio.ImageIO;
 import main.GamePanel;
 
 public class MON_GreenSlime extends Entity{
+    public boolean drogas = false;
+    public int duracion = 0;
+    public final int duracionMaxima = 150;
 
     public MON_GreenSlime(GamePanel gp){
         super(gp);
@@ -24,6 +27,30 @@ public class MON_GreenSlime extends Entity{
         direction = "down";
 
         getImage();
+    }
+
+    @Override
+    public void takeDamage(){
+        this.life--;
+    //    this.speed = this.speed + 1;
+        drogas = true;
+        this.setAction();
+    }
+
+    @Override
+    public void update(){
+        super.update();
+
+        if(drogas){
+            this.speed = 20;
+            duracion++;
+            if(duracion >= duracionMaxima){
+                duracion = 0;
+                drogas = false;
+            }
+        }else{
+            this.speed = 1;
+        }
     }
 
     public void getImage(){

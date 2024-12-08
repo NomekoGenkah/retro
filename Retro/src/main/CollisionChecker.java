@@ -118,7 +118,7 @@ public class CollisionChecker {
         // Verificar si el hitbox de la daga intersecta con el área sólida del objetivo
         if (daggerHitbox.intersects(targetSolidArea)) {
             // Lógica de colisión (por ejemplo, reducir la vida del objetivo)
-            target.life -= 1; // Ejemplo: Reducir vida del objetivo
+            target.takeDamage(); // Ejemplo: Reducir vida del objetivo
             System.out.println("Dagger hit target: " + target);
         }
     }

@@ -41,7 +41,7 @@ public class Entity {
 
         actionLockCounter++;
 
-        if(actionLockCounter == 120){
+        if(actionLockCounter == 90){
             Random random = new Random();
             int i = random.nextInt(100) + 1;
     
