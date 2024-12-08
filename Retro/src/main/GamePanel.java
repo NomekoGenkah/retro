@@ -1,6 +1,7 @@
 package main;
 
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 import entity.Entity;
 import entity.Player;
@@ -10,6 +11,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 
@@ -42,7 +44,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
     SaveManager saveM = new SaveManager(this);
     //player y entidades
     public Player player = new Player(this, keyH);
-    public Entity[] entities = new Entity[3];
+    public Entity[] entities = new Entity[5];
 
     //Mapa
     MapManager mapM = new MapManager(this, player);
@@ -58,6 +60,14 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
         this.setFocusable(true);
         this.addKeyListener(keyH);
         this.addMouseMotionListener(this);
+
+        this.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                player.attack();
+            }
+        });
+        
 
     }
 
@@ -113,10 +123,17 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
         //System.out.println(gameState);
         if(gameState == playState){
             player.update();
+            Rectangle daggerHitbox = player.daggerHitbox; 
+
 
             for(int i = 0; i < entities.length; i++){
                 if(entities[i] != null){
+                    collisionChecker.checkDaggerHitbox(daggerHitbox, entities[i]);
                     entities[i].update();
+
+                    if(entities[i].life <=0){
+                        entities[i] = null;
+                    }
                 }                
             }
             mapM.update();
@@ -166,6 +183,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
 
     @Override
     public void mouseMoved(MouseEvent e){
+        player.updateAngle(e.getX(), e.getY());
         player.updateMousePosition(e.getX(), e.getY());
         //repaint();
     }
@@ -174,6 +192,9 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
     public void mouseDragged(MouseEvent e) {
         // Not used but required for the interface
     }
+
+    
+
 
 
     

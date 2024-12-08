@@ -59,14 +59,6 @@ public class CollisionChecker {
     }
 
     public void checkEntityCollision(Entity entity, Entity target){
-        // Reset collision flag for the entity
-        //entity.collisionOn = false;
-    
-        // Calculate the entity's current position
-    //    int entityLeftWorldX = entity.x + entity.solidArea.x;
-    //    int entityRightWorldX = entity.x + entity.solidArea.x + entity.solidArea.width;
-    //    int entityTopWorldY = entity.y + entity.solidArea.y;
-    //    int entityBottomWorldY = entity.y + entity.solidArea.y + entity.solidArea.height;
     
         // Calculate the entity's future position based on its direction
         int entityNextX = entity.x;
@@ -111,66 +103,25 @@ public class CollisionChecker {
             }
         }
     }
+
+    public void checkDaggerHitbox(Rectangle daggerHitbox, Entity target) {
+        if (daggerHitbox == null || target == null) return;
     
-
-
-
-
-/* 
-    public void checkEntityCollision(Entity entity, Entity target) {
-        // Reset collisionOn for the entity
-        entity.collisionOn = false;
-
-        // Calculate the entity's solid area
-        int entityLeftWorldX = entity.x + entity.solidArea.x;
-        int entityRightWorldX = entity.x + entity.solidArea.x + entity.solidArea.width;
-        int entityTopWorldY = entity.y + entity.solidArea.y;
-        int entityBottomWorldY = entity.y + entity.solidArea.y + entity.solidArea.height;
-
-        if (target != null && target != entity) { // Ignore null and self-collision
-            // Calculate the target's solid area
-            int targetLeftWorldX = target.x + target.solidArea.x;
-            int targetRightWorldX = target.x + target.solidArea.x + target.solidArea.width;
-            int targetTopWorldY = target.y + target.solidArea.y;
-            int targetBottomWorldY = target.y + target.solidArea.y + target.solidArea.height;
-
-            // Check for collision
-            if (entityLeftWorldX < targetRightWorldX &&
-                    entityRightWorldX > targetLeftWorldX &&
-                    entityTopWorldY < targetBottomWorldY &&
-                    entityBottomWorldY > targetTopWorldY) {
-                entity.collisionOn = true;
-                target.collisionOn = true;
-                gp.player.contactMonster();
-                // Stop checking after detecting one collision
-            }
+        // Crear un rectángulo para el área sólida del objetivo
+        Rectangle targetSolidArea = new Rectangle(
+                target.x + target.solidArea.x,
+                target.y + target.solidArea.y,
+                target.solidArea.width,
+                target.solidArea.height
+        );
+    
+        // Verificar si el hitbox de la daga intersecta con el área sólida del objetivo
+        if (daggerHitbox.intersects(targetSolidArea)) {
+            // Lógica de colisión (por ejemplo, reducir la vida del objetivo)
+            target.life -= 1; // Ejemplo: Reducir vida del objetivo
+            System.out.println("Dagger hit target: " + target);
         }
     }
-        */
     
-
-
-
-/* 
-    private int getDirectionOffsetX(String direction) {
-        return switch (direction) {
-            case "left" -> -1;
-            case "right" -> 1;
-            default -> 0;
-        };
-    }
-
-    private int getDirectionOffsetY(String direction) {
-        return switch (direction) {
-            case "up" -> -1;
-            case "down" -> 1;
-            default -> 0;
-        };
-    }
-*/
-
-
-
-
     
 }

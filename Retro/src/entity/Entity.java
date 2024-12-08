@@ -67,6 +67,10 @@ public class Entity {
 
     }
 
+    public void takeDamage(){
+        this.life--;
+    }
+
     public void update(){
         setAction();
         collisionOn = false;

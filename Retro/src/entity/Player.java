@@ -13,6 +13,12 @@ import javax.imageio.ImageIO;
 
 
 public class Player extends Entity{
+    double angle;
+    public Rectangle daggerHitbox;
+    public boolean isAttacking = false;
+    private int attackCounter = 0;
+    private final int attackDuration = 15;
+
     int mouseX, mouseY;
     int playerRadius = gp.tileSize/2;
     int daggerRadius = 20;
@@ -33,6 +39,8 @@ public class Player extends Entity{
         solidArea.y = 16;
         solidArea.width = 32;
         solidArea.height = 32;
+
+        daggerHitbox = new Rectangle(0, 0, 32, 32);
 
         setDefaultValues();
         getPlayerImage();
@@ -77,9 +85,23 @@ public class Player extends Entity{
         life -= 1;
     }
 
+    public void attack(){
+        if(!isAttacking){
+            isAttacking = true;
+            attackCounter = 0;
+        }
+    }
+
     public void updateMousePosition(int x, int y){
         this.mouseX = x;
         this.mouseY = y;
+    }
+
+    public void updateAngle(int mouseX, int mouseY) {
+        int playerCenterX = x + gp.tileSize / 2;
+        int playerCenterY = y + gp.tileSize / 2;
+    
+        angle = Math.atan2(mouseY - playerCenterY, mouseX - playerCenterX);
     }
 
     public void onDeath(){
@@ -93,6 +115,19 @@ public class Player extends Entity{
         }
         if(playerState == deathState){
             
+        }
+
+        if(isAttacking){
+            attackCounter++;
+
+            int daggerHitboxX = gp.player.x + gp.player.solidArea.width  + (int) (gp.player.solidArea.width  * Math.cos(angle)*2);
+            int daggerHitboxY = gp.player.y + gp.player.solidArea.height  + (int) (gp.player.solidArea.height  * Math.sin(angle)*2);
+            daggerHitbox.setBounds(daggerHitboxX - 16, daggerHitboxY - 16, 32, 32);
+
+            if(attackCounter >= attackDuration){
+                isAttacking = false;
+                daggerHitbox.setBounds(0, 0, 0, 0);
+            }
         }
 
         if(playerState == playState){
@@ -174,6 +209,14 @@ public class Player extends Entity{
     }
 
     public void draw(Graphics2D g2){
+
+        //debug
+        if(isAttacking){
+            g2.setColor(Color.RED);
+            g2.fillRect(daggerHitbox.x, daggerHitbox.y, daggerHitbox.width, daggerHitbox.height);
+        }
+
+
         switch(direction){
             case "up":
                 image = up[spriteNum];
@@ -202,29 +245,25 @@ public class Player extends Entity{
     }
 
     public void drawDagger(Graphics2D g2){
-        // Calculate the player's center
         int centerX = x + gp.tileSize / 2;
         int centerY = y + gp.tileSize / 2;
     
-        // Calculate the angle to the mouse
         double angle = Math.atan2(mouseY - centerY, mouseX - centerX);
     
-        // Define the radius of the player's "circle"
-        int playerRadius = gp.tileSize / 2; // The player's "circle" radius
+        int playerRadius = gp.tileSize / 2; 
     
-        // Adjust the dagger's position so its TIP starts outside the circle
-        int daggerX = centerX + (int) ((playerRadius + 8) * Math.cos(angle)); // Add the distance from the center to the dagger's tip (16 px)
+        int daggerX = centerX + (int) ((playerRadius + 8) * Math.cos(angle)); 
         int daggerY = centerY + (int) ((playerRadius + 8) * Math.sin(angle));
     
-        // Offset the sprite so its tip aligns with the calculated dagger position
-        int spriteX = daggerX; // Center of sprite is 16px left of the tip
-        int spriteY = daggerY;      // Sprite's top edge aligns with the tip
+        
+        int spriteX = daggerX; 
+        int spriteY = daggerY;      
     
-        // Rotate and draw the dagger
-        Graphics2D g2Rotated = (Graphics2D) g2.create(); // Create a copy for rotation
-        g2Rotated.rotate(angle, daggerX, daggerY);       // Rotate around the dagger's tip
-        g2Rotated.drawImage(dagger, spriteX, spriteY, null); // Draw the dagger
-        g2Rotated.dispose(); // Dispose the rotated Graphics2D to avoid interference
+        // rotar y dibujar daga
+        Graphics2D g2Rotated = (Graphics2D) g2.create(); 
+        g2Rotated.rotate(angle, daggerX, daggerY);     
+        g2Rotated.drawImage(dagger, spriteX, spriteY, null); 
+        g2Rotated.dispose(); 
     }
 
 }
