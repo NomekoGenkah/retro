@@ -1,12 +1,14 @@
 package entity;
 
+import java.util.Random;
+
 import javax.imageio.ImageIO;
 import main.GamePanel;
 
 public class Soldado extends Entity {
     public boolean furiainmortal = false;
     public int duracion = 0;
-    public final int duracionMaxima = 360;
+    public final int duracionMaxima = 480;
 
     public Soldado(GamePanel gp) {
         super(gp);
@@ -38,11 +40,60 @@ public class Soldado extends Entity {
     }
 
     @Override
+    public void setAction() {
+        this.actionLockCounter++;
+    
+        if (this.actionLockCounter >= 10) {
+            if (furiainmortal) {
+
+                int deltaX = gp.player.x - this.x;
+                int deltaY = gp.player.y - this.y;
+    
+                if (Math.abs(deltaX) > Math.abs(deltaY)) {
+
+                    if (deltaX > 0) {
+                        direction = "right";
+                    } else {
+                        direction = "left";
+                    }
+                } else {
+
+                    if (deltaY > 0) {
+                        direction = "down";
+                    } else {
+                        direction = "up";
+                    }
+                }
+            } else {
+
+                Random random = new Random();
+                int i = random.nextInt(100) + 1;
+    
+                if (i <= 25) {
+                    this.direction = "up";
+                } else if (i > 25 && i <= 50) {
+                    this.direction = "down";
+                } else if (i > 50 && i <= 75) {
+                    this.direction = "left";
+                } else if (i > 75 && i <= 100) {
+                    this.direction = "right";
+                }
+            }
+    
+            this.actionLockCounter = 0; // Reinicia el contador de acciones
+        }
+    }
+    
+
+    @Override
     public void update() {
         super.update();
 
         if (furiainmortal) {
-            this.speed = 45;
+            this.speed = 3;
+            if(duracion > duracionMaxima/2){
+                this.speed = 4;
+            }
             //this.life= ;
             duracion++;
             if (duracion >= duracionMaxima) {
@@ -50,7 +101,7 @@ public class Soldado extends Entity {
                 furiainmortal = false;
             }
         } else {
-            this.speed = 3; 
+            this.speed = 2; 
         }
     }
 
