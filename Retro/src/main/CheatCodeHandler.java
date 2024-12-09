@@ -4,7 +4,7 @@ import java.awt.event.KeyEvent;
 
 public class CheatCodeHandler extends KeyAdapter {
 
-    private String cheatCode = "000";  // El código de trampa que se espera
+    private String cheatCode = "nota7";  // El código de trampa que se espera
     private StringBuilder inputSequence = new StringBuilder();  // Almacena las teclas ingresadas
     private boolean cheatCodeActive = false;  // Indica si el código de trampa se activó
 

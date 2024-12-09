@@ -211,12 +211,5 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
 
     @Override
     public void mouseDragged(MouseEvent e) {
-        // Not used but required for the interface
-    }
-
-    
-
-
-
-    
+    }    
 }
