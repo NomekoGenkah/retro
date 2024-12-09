@@ -33,6 +33,10 @@ public class Player extends Entity{
 
     KeyHandler keyH;
     BufferedImage image = null, dagger = null;
+    int worldX;
+    int screenX;
+    int worldY;
+    int screenY;
 
     public Player(GamePanel gp, KeyHandler keyH){
         super(gp);
