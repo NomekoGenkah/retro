@@ -19,6 +19,7 @@ public class AssetSetter {
         gp.entities[0] = new MON_GreenSlime(gp);
         gp.entities[0].x = gp.tileSize * 6;
         gp.entities[0].y = gp.tileSize * 3;
+        
 
         gp.entities[1] = new MON_GreenSlime(gp);
         gp.entities[1].x = gp.tileSize * 4;

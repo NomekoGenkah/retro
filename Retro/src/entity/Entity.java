@@ -39,29 +39,29 @@ public class Entity {
 
     public void setAction(){
 
-        actionLockCounter++;
+        this.actionLockCounter++;
 
-        if(actionLockCounter == 90){
+        if(this.actionLockCounter == 80){
             Random random = new Random();
             int i = random.nextInt(100) + 1;
     
             if(i <= 25){
-                direction = "up";
+                this.direction = "up";
             }
     
             if(i > 25 && i <= 50){
-                direction = "down";            
+                this.direction = "down";            
             }
     
             if(i > 50 && i <= 75){
-                direction = "left";
+                this.direction = "left";
             }
     
             if(i > 75 && i <= 100){
-                direction = "right";
+                this.direction = "right";
             }
 
-            actionLockCounter = 0;
+            this.actionLockCounter = 0;
 
         }
 

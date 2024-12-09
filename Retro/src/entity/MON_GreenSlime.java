@@ -24,7 +24,7 @@ public class MON_GreenSlime extends Entity{
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
         
-        direction = "down";
+        this.direction = "down";
 
         getImage();
     }
@@ -32,9 +32,7 @@ public class MON_GreenSlime extends Entity{
     @Override
     public void takeDamage(){
         this.life--;
-    //    this.speed = this.speed + 1;
         drogas = true;
-        this.setAction();
     }
 
     @Override

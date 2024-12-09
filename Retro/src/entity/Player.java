@@ -27,6 +27,10 @@ public class Player extends Entity{
     final int playState = 0;
     public final int deathState = 1;
 
+    boolean invulnerable = false;
+    int duracion = 0;
+    final int duracionMax = 60;
+
     KeyHandler keyH;
     BufferedImage image = null, dagger = null;
 
@@ -53,8 +57,8 @@ public class Player extends Entity{
         y = 100;
         speed = 4;
         direction = " ";
-        maxLife = 5;
-        life = 2;
+        maxLife = 6;
+        life = maxLife;
     }
 
     public void getPlayerImage(){
@@ -81,8 +85,10 @@ public class Player extends Entity{
         }
     }
 
-    public void contactMonster(){
+    public void takeDamage(){
         life -= 1;
+        invulnerable = true;
+
     }
 
     public void attack(){
@@ -114,7 +120,15 @@ public class Player extends Entity{
             playerState = deathState;
         }
         if(playerState == deathState){
-            
+        }
+
+        if(invulnerable){
+            duracion++;
+
+            if(duracion >= duracionMax){
+                invulnerable = false;
+                duracion = 0;
+            }
         }
 
         if(isAttacking){
@@ -156,7 +170,9 @@ public class Player extends Entity{
                     if(gp.entities[i] != null){
                         gp.collisionChecker.checkEntityCollision(this, gp.entities[i]);
                         if(collisionOn){
-                            contactMonster();
+                            if(!invulnerable){
+                                takeDamage();
+                            }
                             break;
                         }
                     }
