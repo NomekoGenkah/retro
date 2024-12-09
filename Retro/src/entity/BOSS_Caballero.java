@@ -160,4 +160,14 @@ public class BOSS_Caballero extends Entity {
             );
         }
     }
+
+    @Override
+    public void cargarEspecial(){
+        try{
+            especial = ImageIO.read(getClass().getResourceAsStream("/res/monster/boss2.png"));
+            
+        }catch(Exception e){
+            // TODO: handle exception
+        }
+    }
 }

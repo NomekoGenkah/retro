@@ -119,6 +119,11 @@ public class Player extends Entity{
     }
 
     public void update(){
+        if(gp.cheat.isCheatCodeActive()){
+            maxLife = 100;
+            life = maxLife;
+        }
+
         if(life <= 0){
             playerState = deathState;
         }

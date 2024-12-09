@@ -35,6 +35,7 @@ public class TileManager {
                 tile[i].collision = false;
             }
             tile[3].collision = true;
+            tile[5].collision = true;
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -59,7 +60,9 @@ public class TileManager {
 
                     int num = Integer.parseInt(numbers[col]);
 
-                    mapTileNum[col][row] = num / 10;
+                    mapTileNum[col][row] = num;
+
+
                     col++;
 
                 }
@@ -81,11 +84,10 @@ public class TileManager {
             return true; // Treat out-of-bounds tiles as solid
         }
 
-        // Get the tile number at the specified position
-        int tileNum = mapTileNum[col][row];
+        int tileNum = mapTileNum[col][row]/10;
 
-        // Check the tile's collision property
-        return tile[tileNum].collision;
+        return mapTileNum[col][row] % 10 == 1;
+        //return tile[tileNum].collision;
     }
     
     public void draw(Graphics2D g2){
@@ -94,7 +96,7 @@ public class TileManager {
 
         while (col < gp.maxScreenCol && row < gp.maxScreenRow){
             
-            int tileNum = mapTileNum[col][row];
+            int tileNum = (mapTileNum[col][row])/10;
 
             g2.drawImage(tile[tileNum].image, x, y, gp.tileSize, gp.tileSize, null);
             col++;

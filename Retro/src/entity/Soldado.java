@@ -42,7 +42,7 @@ public class Soldado extends Entity {
         super.update();
 
         if (furiainmortal) {
-            this.speed = 15;
+            this.speed = 45;
             //this.life= ;
             duracion++;
             if (duracion >= duracionMaxima) {
@@ -65,6 +65,16 @@ public class Soldado extends Entity {
             }
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void cargarEspecial(){
+        try{
+            especial = ImageIO.read(getClass().getResourceAsStream("/res/monster/boss3.png"));
+            
+        }catch(Exception e){
+            // TODO: handle exception
         }
     }
 }
