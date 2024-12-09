@@ -6,7 +6,7 @@ import main.GamePanel;
 public class Soldado extends Entity {
     public boolean furiainmortal = false;
     public int duracion = 0;
-    public final int duracionMaxima = 150;
+    public final int duracionMaxima = 360;
 
     public Soldado(GamePanel gp) {
         super(gp);
@@ -28,8 +28,12 @@ public class Soldado extends Entity {
 
     @Override
     public void takeDamage() {
-        this.life--;
-        furiainmortal = true; // R trynda
+        if(!furiainmortal){
+            this.life--;
+        }
+        if(this.life == 1){
+            furiainmortal = true; // R trynda
+        }
         this.setAction();
     }
 
@@ -39,25 +43,25 @@ public class Soldado extends Entity {
 
         if (furiainmortal) {
             this.speed = 15;
-            this.maxLife= 50;
+            //this.life= ;
             duracion++;
             if (duracion >= duracionMaxima) {
                 duracion = 0;
                 furiainmortal = false;
             }
         } else {
-            this.speed = 2; 
+            this.speed = 3; 
         }
     }
 
     public void getImage() {
         try {
             for (int i = 0; i < down.length; i++) {
-                idle[i] = ImageIO.read(getClass().getResourceAsStream("/res/monster/soldado_down_" + i + ".png"));
-                up[i] = ImageIO.read(getClass().getResourceAsStream("/res/monster/soldado_up_" + i + ".png"));
-                down[i] = ImageIO.read(getClass().getResourceAsStream("/res/monster/soldado_down_" + i + ".png"));
-                left[i] = ImageIO.read(getClass().getResourceAsStream("/res/monster/soldado_left_" + i + ".png"));
-                right[i] = ImageIO.read(getClass().getResourceAsStream("/res/monster/soldado_right_" + i + ".png"));
+                idle[i] = ImageIO.read(getClass().getResourceAsStream("/res/monster/soldado_down_.png"));
+                up[i] = ImageIO.read(getClass().getResourceAsStream("/res/monster/soldado_up_.png"));
+                down[i] = ImageIO.read(getClass().getResourceAsStream("/res/monster/soldado_down_.png"));
+                left[i] = ImageIO.read(getClass().getResourceAsStream("/res/monster/soldado_left_.png"));
+                right[i] = ImageIO.read(getClass().getResourceAsStream("/res/monster/soldado_right_.png"));
             }
         } catch (Exception e) {
             e.printStackTrace();

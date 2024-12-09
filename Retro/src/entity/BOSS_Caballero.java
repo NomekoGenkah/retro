@@ -5,6 +5,8 @@ import main.GamePanel;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.Random;
+
 import javax.imageio.ImageIO;
 
 public class BOSS_Caballero extends Entity {
@@ -25,9 +27,9 @@ public class BOSS_Caballero extends Entity {
     private void setDefaultValues() {
         this.x = 400; 
         this.y = 300;
-        this.speed = 0;  
+        this.speed = 1;  
         this.direction = "idle"; 
-        this.maxLife = 50;
+        this.maxLife = 30;
         this.life = maxLife;
     }
 
@@ -36,7 +38,7 @@ public class BOSS_Caballero extends Entity {
             //cargar frames de animación en reposo
             idleFrames = new BufferedImage[3];
             for (int i = 0; i < idleFrames.length; i++) {
-                idleFrames[i] = ImageIO.read(getClass().getResourceAsStream("/res/monster/caballero_idle_" + i + ".png"));
+                idleFrames[i] = ImageIO.read(getClass().getResourceAsStream("/res/monster/caballero_idle_.png"));
             }
 
             //cargar frames de ataque
@@ -61,7 +63,41 @@ public class BOSS_Caballero extends Entity {
     }
 
     @Override
+    public void setAction() {
+        //super.setAction();
+
+        this.actionLockCounter++;
+
+        if(this.actionLockCounter == 80){
+            Random random = new Random();
+            int i = random.nextInt(100) + 1;
+    
+            if(i <= 25){
+                this.isAttacking = true;
+                this.direction = "up";
+            }
+    
+            if(i > 25 && i <= 50){
+                this.direction = "down";            
+            }
+    
+            if(i > 50 && i <= 75){
+                this.direction = "left";
+            }
+    
+            if(i > 75 && i <= 100){
+                this.direction = "right";
+            }
+
+            this.actionLockCounter = 0;
+
+        }
+
+    }
+
+    @Override
     public void update() {
+        super.update();
         if (isAttacking) {
             frameCounter++;
             if (frameCounter >= attackDuration) {

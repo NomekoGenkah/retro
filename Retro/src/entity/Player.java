@@ -27,7 +27,7 @@ public class Player extends Entity{
     final int playState = 0;
     public final int deathState = 1;
 
-    boolean invulnerable = false;
+    public boolean invulnerable = false;
     int duracion = 0;
     final int duracionMax = 60;
 
@@ -173,6 +173,7 @@ public class Player extends Entity{
                 for(int i = 0; i < gp.entities.length; i++){
                     if(gp.entities[i] != null){
                         gp.collisionChecker.checkEntityCollision(this, gp.entities[i]);
+                        gp.collisionChecker.checkEntityCollision(gp.entities[i], this);
                         if(collisionOn){
                             if(!invulnerable){
                                 takeDamage();

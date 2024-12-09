@@ -44,7 +44,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
     SaveManager saveM = new SaveManager(this);
     //player y entidades
     public Player player = new Player(this, keyH);
-    public Entity[] entities = new Entity[5];
+    public Entity[] entities = new Entity[6];
 
     //Mapa
     MapManager mapM = new MapManager(this, player);

@@ -98,6 +98,9 @@ public class CollisionChecker {
             // Check for intersection
             if (entityFutureSolidArea.intersects(targetSolidArea)){
                 entity.collisionOn = true;
+                if(!gp.player.invulnerable){
+                    gp.player.takeDamage();
+                }
                 //entity.life--;
                 //gp.gameState = gp.pauseState;
             }
