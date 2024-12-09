@@ -14,7 +14,7 @@ public class TileManager {
     GamePanel gp;
     public Tile[] tile;
     public int mapTileNum[][];
-    private String tileName[] = {"grass", "water", "sand", "wall", "earth"};
+    private String tileName[] = {"grass", "water", "sand", "wall", "earth", "tree"};
 
     public TileManager(GamePanel gp){
 

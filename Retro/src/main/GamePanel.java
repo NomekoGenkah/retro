@@ -122,7 +122,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
         }
         //System.out.println(gameState);
         if(gameState == playState){
-            player.update();
+            //player.update();
             Rectangle daggerHitbox = player.daggerHitbox; 
 
 
@@ -136,6 +136,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
                     }
                 }                
             }
+            player.update();
             mapM.update();
         }
     }
