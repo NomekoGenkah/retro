@@ -27,7 +27,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
     public final int screenWidth = tileSize * maxScreenCol; //768
     public final int screenHeight = tileSize * maxScreenRow; //576
 
-    final int FPS = 60;
+    public final int FPS = 60;
 
     //ESTADOS DE JUEGO
     public int gameState;
