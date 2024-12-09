@@ -100,7 +100,10 @@ public class MapManager {
         }
 
         // Load the map for the new screen
-        tileM.loadMap("/res/screens/screen" + mapScreenNum[x][y] + ".txt");
+        if(direction != " "){
+            tileM.loadMap("/res/screens/screen" + mapScreenNum[x][y] + ".txt");
+        }
+        //tileM.loadMap("/res/screens/screen" + mapScreenNum[x][y] + ".txt");
     }
 
     public boolean withinBorder(int nextX, int nextY) {
@@ -108,7 +111,6 @@ public class MapManager {
     }
 
     public void update() {
-        // Determine if the player has moved to the screen edge
         String direction = null;
 
         if (player.y <= edgeBuffer) {
@@ -121,7 +123,6 @@ public class MapManager {
             direction = "right";
         }
 
-        // Change map if the player has reached the edge
         if (direction != null) {
             changeMap(direction);
         }

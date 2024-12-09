@@ -29,8 +29,19 @@ public class BOSS_Caballero extends Entity {
         this.y = 300;
         this.speed = 1;  
         this.direction = "idle"; 
-        this.maxLife = 30;
+        this.maxLife = 150;
         this.life = maxLife;
+
+        setDefaultHitBox();
+    }
+
+    public void setDefaultHitBox(){
+        solidArea.x = 30;
+        solidArea.y = 20;
+        solidArea.width = 220;
+        solidArea.height = 300;
+        solidAreaDefaultX = solidArea.x;
+        solidAreaDefaultY = solidArea.y;
     }
 
     private void loadImages() {
@@ -100,9 +111,19 @@ public class BOSS_Caballero extends Entity {
         super.update();
         if (isAttacking) {
             frameCounter++;
+
+            if(frameCounter >= 2){
+                solidArea.x = -10;
+                solidArea.y = -10;
+                solidArea.width = 300;
+                solidArea.height = 400;
+                solidAreaDefaultX = solidArea.x;
+                solidAreaDefaultY = solidArea.y;    
+            }
             if (frameCounter >= attackDuration) {
                 isAttacking = false;
                 frameCounter = 0;
+                setDefaultHitBox();
             }
         }
     }
@@ -122,7 +143,13 @@ public class BOSS_Caballero extends Entity {
         int scale = 2;
         int width = currentFrame.getWidth() * scale;
         int height = currentFrame.getHeight() * scale;
-        boolean drawImage = g2.drawImage(currentFrame, x - gp.player.worldX + gp.player.screenX, y - gp.player.worldY + gp.player.screenY, width, height, null);
+
+        if(gp.cheat.isCheatCodeActive()){
+            g2.drawImage(especial, x - gp.player.worldX + gp.player.screenX, y - gp.player.worldY + gp.player.screenY, width, height, null);
+        }else{
+            g2.drawImage(currentFrame, x - gp.player.worldX + gp.player.screenX, y - gp.player.worldY + gp.player.screenY, width, height, null);
+        }
+
 
         if (isAttacking && frameCounter >= attackDuration - (gp.FPS / 4)) {
             g2.drawImage(

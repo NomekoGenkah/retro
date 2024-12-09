@@ -7,6 +7,8 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.util.Random;
 
+import javax.imageio.ImageIO;
+
 
 public class Entity {
     GamePanel gp;
@@ -19,6 +21,7 @@ public class Entity {
     public BufferedImage[] up = new BufferedImage[frames], down = new BufferedImage[frames], left = new BufferedImage[frames], right = new BufferedImage[frames];
     public BufferedImage[] idle = new BufferedImage[frames]; 
     public String direction;
+    BufferedImage especial;
 
     public int spriteCounter = 0;
     public int spriteNum = 1;
@@ -35,6 +38,16 @@ public class Entity {
 
     public Entity(GamePanel gp){
         this.gp = gp;
+        cargarEspecial();
+    }
+
+    public void cargarEspecial(){
+        try{
+            especial = ImageIO.read(getClass().getResourceAsStream("/res/monster/boss.png"));
+            
+        }catch(Exception e){
+            // TODO: handle exception
+        }
     }
 
     public void setAction(){
@@ -146,7 +159,13 @@ public class Entity {
                 break;
         }
 
-        g2.drawImage(image, x, y, gp.tileSize, gp.tileSize, null);
+        if(gp.cheat.isCheatCodeActive()){
+            g2.drawImage(especial, x, y, gp.tileSize, gp.tileSize, null);
+        }else{
+            g2.drawImage(image, x, y, gp.tileSize, gp.tileSize, null);
+        }
+
+        //g2.drawImage(image, x, y, gp.tileSize, gp.tileSize, null);
     }
 
     

@@ -1,7 +1,6 @@
 package main;
 
 import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
 
 import entity.Entity;
 import entity.Player;
@@ -52,6 +51,9 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
     //UI
     UI ui = new UI(this);
 
+    //trampas
+    public CheatCodeHandler cheat = new CheatCodeHandler();
+
 
     GamePanel(){
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
@@ -59,6 +61,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
         this.setDoubleBuffered(true);
         this.setFocusable(true);
         this.addKeyListener(keyH);
+        this.addKeyListener(cheat);
         this.addMouseMotionListener(this);
 
         this.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -117,6 +120,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
 
     //logica
     public void update(){
+
         if(gameState == pauseState){
         //    saveM.saveGame();
         }
