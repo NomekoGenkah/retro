@@ -18,6 +18,8 @@ public class BOSS_Caballero extends Entity {
     private int frameCounter = 0;         
     private final int attackDuration = 60;
 
+    private boolean music = true;
+
     public BOSS_Caballero(GamePanel gp) {
         super(gp);
         loadImages(); 
@@ -64,6 +66,16 @@ public class BOSS_Caballero extends Entity {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void takeDamage(){
+        super.takeDamage();
+        if(music && gp.cheat.isCheatCodeActive()){
+            gp.playSE(1);
+            music = false;
+        }
+        //gp.playSE(1);
     }
 
     public void startAttack() {

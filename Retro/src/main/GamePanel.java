@@ -33,10 +33,13 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
     public final int titleState = 0;
     public final int playState = 1;
     public final int pauseState = 2;
+    public final int winState = 3;
+
+    boolean ganar = true;
 
     //system
     KeyHandler keyH = new KeyHandler(this);
-    Sound sound = new Sound();
+    public Sound sound = new Sound();
     Thread gameThread;
     public CollisionChecker collisionChecker = new CollisionChecker(this);
     AssetSetter aSetter = new AssetSetter(this);
@@ -77,7 +80,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
     public void setupGame(){
         gameState = titleState;
         aSetter.setGreenSlime();
-        //playMusic(0);
+        playMusic(0);
     }
 
     public void startGameThread(){
@@ -120,6 +123,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
 
     //logica
     public void update(){
+        ganar = true;
 
         if(gameState == pauseState){
         //    saveM.saveGame();
@@ -132,6 +136,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
 
             for(int i = 0; i < entities.length; i++){
                 if(entities[i] != null){
+                    ganar = false;
                     collisionChecker.checkDaggerHitbox(daggerHitbox, entities[i]);
                     entities[i].update();
 
@@ -140,8 +145,16 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
                     }
                 }                
             }
+            if(ganar){
+                gameState = winState;
+            }
+
             player.update();
             mapM.update();
+        }
+
+        if(gameState == winState){
+
         }
     }
     
@@ -150,6 +163,9 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D)g;
 
+
+        if(gameState == winState){
+        }
 
         if(gameState == titleState){
         }else{

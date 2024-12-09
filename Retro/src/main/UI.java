@@ -52,9 +52,12 @@ public class UI {
             drawPauseScreen();
         }
 
+        if(gp.gameState == gp.winState){
+            drawWinScreen();
+        }
+
         if(gp.player.playerState == gp.player.deathState){
             drawDeathScreen();
-
         }
     }
 
@@ -159,16 +162,19 @@ public class UI {
 
     }
 
+    public void drawWinScreen(){
+        String text = "¡GANASTE!";
+        int x = getXforCenteredText(text);
+        int y = gp.screenHeight/2;
+        g2.drawString(text, x, y);
+
+    }
+
     public void drawDeathScreen(){
         String text = "DEAD";
 
         int x = getXforCenteredText(text);
-        int y = gp.screenHeight/4;
-        g2.drawString(text, x, y);
-
-        text = "QUIT";
-        x = getXforCenteredText(text);
-        y += gp.tileSize;
+        int y = gp.screenHeight/2;
         g2.drawString(text, x, y);
 
     }
